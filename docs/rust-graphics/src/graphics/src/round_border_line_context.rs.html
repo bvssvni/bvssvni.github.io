@@ -74,7 +74,6 @@
 <span id='34'>34</span>
 <span id='35'>35</span>
 <span id='36'>36</span>
-<span id='37'>37</span>
 </pre><pre class='rust '>
 
 <span class='kw'>use</span> {
@@ -83,7 +82,6 @@
     <span class='ident'>Field</span>,
     <span class='ident'>Line</span>,
     <span class='ident'>Matrix2d</span>,
-    <span class='ident'>RoundBorder</span>,
     <span class='ident'>RoundBorderLineColorContext</span>,
     <span class='ident'>Value</span>,
 };
@@ -97,7 +95,7 @@
     <span class='doccomment'>/// Current line.
 </span>    <span class='kw'>pub</span> <span class='ident'>line</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Line</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// Current round border.
-</span>    <span class='kw'>pub</span> <span class='ident'>round_border</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>RoundBorder</span><span class='op'>&gt;</span>,
+</span>    <span class='kw'>pub</span> <span class='ident'>round_border_radius</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>f64</span><span class='op'>&gt;</span>,
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>AddColor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>RoundBorderLineContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
@@ -108,7 +106,7 @@
             <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
             <span class='ident'>line</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
             <span class='ident'>color</span>: <span class='ident'>Value</span>([<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>]),
-            <span class='ident'>round_border</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>round_border</span>.<span class='ident'>get</span>()),
+            <span class='ident'>round_border_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>round_border_radius</span>.<span class='ident'>get</span>()),
         }
     }
 }

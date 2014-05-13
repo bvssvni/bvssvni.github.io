@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The graphics library documentation.">
 
-    <title>graphics::triangulation::rect_tri_list_rgba_f32 - Rust</title>
+    <title>stroke.rs.html -- source</title>
 
     <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
           rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
 
     
 </head>
@@ -24,7 +24,7 @@
     <section class="sidebar">
         
 
-        <p class='location'><a href='../index.html'>graphics</a>&#8203;::<a href='index.html'>triangulation</a></p><div class='block fn'><h2>Functions</h2><a class='fn current' href='fn.rect_tri_list_rgba_f32.html'>rect_tri_list_rgba_f32</a><br/><a class='fn ' href='fn.rect_tri_list_uv_f32.html'>rect_tri_list_uv_f32</a><br/><a class='fn ' href='fn.rect_tri_list_xy_f32.html'>rect_tri_list_xy_f32</a><br/><a class='fn ' href='fn.stream_polygon_tri_list_xy_f32_rgba_f32.html'>stream_polygon_tri_list_xy_f32_rgba_f32</a><br/><a class='fn ' href='fn.with_ellipse_tri_list_xy_f32_rgba_f32.html'>with_ellipse_tri_list_xy_f32_rgba_f32</a><br/><a class='fn ' href='fn.with_lerp_polygons_tri_list_xy_f32_rgba_f32.html'>with_lerp_polygons_tri_list_xy_f32_rgba_f32</a><br/><a class='fn ' href='fn.with_polygon_tri_list_xy_f32_rgba_f32.html'>with_polygon_tri_list_xy_f32_rgba_f32</a><br/><a class='fn ' href='fn.with_round_border_line_tri_list_xy_f32_rgba_f32.html'>with_round_border_line_tri_list_xy_f32_rgba_f32</a><br/><a class='fn ' href='fn.with_round_rectangle_tri_list_xy_f32_rgba_f32.html'>with_round_rectangle_tri_list_xy_f32_rgba_f32</a><br/></div>
+        
     </section>
 
     <nav class="sub">
@@ -38,10 +38,25 @@
         </form>
     </nav>
 
-    <section id='main' class="content fn">
-<h1 class='fqn'>Function <a href='../index.html'>graphics</a>::<a href='index.html'>triangulation</a>::<a class='fn' href=''>rect_tri_list_rgba_f32</a><a class='source' href='../../src/graphics/src/triangulation.rs.html#271-285'>[src]</a></h1>
-<pre class='rust fn'>pub fn rect_tri_list_rgba_f32(color: [f32, ..4]) -&gt; [f32, ..48]</pre><div class='docblock'><p>Creates triangle list colors from rectangle.</p>
-</div></section>
+    <section id='main' class="content source"><pre class='line-numbers'><span id='1'>1</span>
+<span id='2'>2</span>
+<span id='3'>3</span>
+<span id='4'>4</span>
+<span id='5'>5</span>
+<span id='6'>6</span>
+<span id='7'>7</span>
+<span id='8'>8</span>
+</pre><pre class='rust '>
+<span class='kw'>use</span> {<span class='ident'>BackEnd</span>};
+
+<span class='doccomment'>/// Strokes a shape using a back-end.
+</span><span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Stroke</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>/// Stroke shape using back-end.
+</span>    <span class='kw'>fn</span> <span class='ident'>stroke</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>BackEnd</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>back_end</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>);
+}
+
+</pre>
+</section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -78,11 +93,11 @@
     </div>
 
     <script>
-        var rootPath = "../../";
+        var rootPath = "../../../";
         var currentCrate = "graphics";
     </script>
-    <script src="../../jquery.js"></script>
-    <script src="../../main.js"></script>
-    <script async src="../../search-index.js"></script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    <script async src="../../../search-index.js"></script>
 </body>
 </html>

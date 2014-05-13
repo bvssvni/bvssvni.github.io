@@ -59,14 +59,12 @@
 <span id='19'>19</span>
 <span id='20'>20</span>
 <span id='21'>21</span>
-<span id='22'>22</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> {
     <span class='ident'>Color</span>,
     <span class='ident'>Field</span>,
     <span class='ident'>Line</span>,
     <span class='ident'>Matrix2d</span>,
-    <span class='ident'>RoundBorder</span>,
 };
 
 <span class='doccomment'>/// A line context with round border information.
@@ -80,7 +78,7 @@
     <span class='doccomment'>/// Current color.
 </span>    <span class='kw'>pub</span> <span class='ident'>color</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Color</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// Current round border.
-</span>    <span class='kw'>pub</span> <span class='ident'>round_border</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>RoundBorder</span><span class='op'>&gt;</span>,
+</span>    <span class='kw'>pub</span> <span class='ident'>round_border_radius</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>f64</span><span class='op'>&gt;</span>,
 }
 
 </pre>

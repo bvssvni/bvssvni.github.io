@@ -287,12 +287,60 @@
 <span id='247'>247</span>
 <span id='248'>248</span>
 <span id='249'>249</span>
+<span id='250'>250</span>
+<span id='251'>251</span>
+<span id='252'>252</span>
+<span id='253'>253</span>
+<span id='254'>254</span>
+<span id='255'>255</span>
+<span id='256'>256</span>
+<span id='257'>257</span>
+<span id='258'>258</span>
+<span id='259'>259</span>
+<span id='260'>260</span>
+<span id='261'>261</span>
+<span id='262'>262</span>
+<span id='263'>263</span>
+<span id='264'>264</span>
+<span id='265'>265</span>
+<span id='266'>266</span>
+<span id='267'>267</span>
+<span id='268'>268</span>
+<span id='269'>269</span>
+<span id='270'>270</span>
+<span id='271'>271</span>
+<span id='272'>272</span>
+<span id='273'>273</span>
+<span id='274'>274</span>
+<span id='275'>275</span>
+<span id='276'>276</span>
+<span id='277'>277</span>
+<span id='278'>278</span>
+<span id='279'>279</span>
+<span id='280'>280</span>
+<span id='281'>281</span>
+<span id='282'>282</span>
+<span id='283'>283</span>
+<span id='284'>284</span>
+<span id='285'>285</span>
+<span id='286'>286</span>
+<span id='287'>287</span>
+<span id='288'>288</span>
+<span id='289'>289</span>
+<span id='290'>290</span>
+<span id='291'>291</span>
+<span id='292'>292</span>
+<span id='293'>293</span>
+<span id='294'>294</span>
+<span id='295'>295</span>
+<span id='296'>296</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Methods for converting shapes into triangles.
 </span>
 <span class='kw'>use</span> <span class='ident'>std</span>;
 <span class='kw'>use</span> {
     <span class='ident'>Image</span>,
+    <span class='ident'>Line</span>,
     <span class='ident'>Matrix2d</span>,
     <span class='ident'>Rectangle</span>,
 };
@@ -367,6 +415,52 @@
         <span class='prelude-val'>Some</span>([<span class='ident'>cx</span> <span class='op'>+</span> <span class='ident'>angle</span>.<span class='ident'>cos</span>() <span class='op'>*</span> <span class='ident'>cw</span>, <span class='ident'>cy</span> <span class='op'>+</span> <span class='ident'>angle</span>.<span class='ident'>sin</span>() <span class='op'>*</span> <span class='ident'>ch</span>])
     }, <span class='ident'>color</span>, <span class='ident'>f</span>);
 }
+
+<span class='doccomment'>/// Streams a round border line.
+</span><span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_round_border_line_tri_list_xy_f32_rgba_f32</span>(
+    <span class='ident'>_resolution_corner</span>: <span class='ident'>uint</span>,
+    <span class='ident'>_m</span>: <span class='kw-2'>&amp;</span><span class='ident'>Matrix2d</span>,
+    <span class='ident'>_line</span>: <span class='kw-2'>&amp;</span><span class='ident'>Line</span>,
+    <span class='ident'>_round_border_radius</span>: <span class='kw-2'>&amp;</span><span class='ident'>f64</span>,
+    <span class='ident'>_color</span>: [<span class='ident'>f32</span>, ..<span class='number'>4</span>],
+    <span class='ident'>_f</span>: <span class='op'>|</span><span class='ident'>vertices</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>], <span class='ident'>colors</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>]<span class='op'>|</span>) {<span class='comment'>
+
+    /*
+    let (x, y, w, h) = (rect[0], rect[1], rect[2], rect[3]);
+    let radius = round_border[0];
+    let n = resolution_corner * 4 + 4;
+    let mut i = 0u;
+    stream_polygon_tri_list_xy_f32_rgba_f32(m, || {
+        if i &gt;= n { return None; }
+
+        let j = i;
+        i += 1;
+        match j {
+            j if j &gt;= resolution_corner * 3 =&gt; {
+                let angle = j as f64 / (n - 3) as f64 * std::f64::consts::PI_2;
+                let (cx, cy) = (x + w - radius, y + radius);
+                Some([cx + angle.cos() * radius, cy + angle.sin() * radius])
+            },
+            j if j &gt;= resolution_corner * 2 =&gt; {
+                let angle = j as f64 / (n - 2) as f64 * std::f64::consts::PI_2;
+                let (cx, cy) = (x + radius, y + radius);
+                Some([cx + angle.cos() * radius, cy + angle.sin() * radius])
+            },
+            j if j &gt;= resolution_corner * 1 =&gt; {
+                let angle = j as f64 / (n - 1) as f64 * std::f64::consts::PI_2;
+                let (cx, cy) = (x + radius, y + h - radius);
+                Some([cx + angle.cos() * radius, cy + angle.sin() * radius])
+            },
+            j =&gt; {
+                let angle = j as f64 / (n - 0) as f64 * std::f64::consts::PI_2;
+                let (cx, cy) = (x + w - radius, y + h - radius);
+                Some([cx + angle.cos() * radius, cy + angle.sin() * radius])
+            },
+        }
+    }, color, f);
+    */
+</span>}
 
 <span class='doccomment'>/// Streams a round rectangle.
 </span><span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
