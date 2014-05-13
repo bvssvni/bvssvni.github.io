@@ -166,15 +166,15 @@
 <span id='126'>126</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> {
-    <span class='ident'>AddPolygons</span>, 
+    <span class='ident'>AddPolygons</span>,
     <span class='ident'>BackEnd</span>,
-    <span class='ident'>Borrowed</span>, 
+    <span class='ident'>Borrowed</span>,
     <span class='ident'>Clear</span>,
-    <span class='ident'>Color</span>, 
-    <span class='ident'>Field</span>, 
+    <span class='ident'>Color</span>,
+    <span class='ident'>Field</span>,
     <span class='ident'>Matrix2d</span>,
     <span class='ident'>TweenPolygonsColorContext</span>,
-    <span class='ident'>Value</span>, 
+    <span class='ident'>Value</span>,
     <span class='ident'>View</span>,
 };
 <span class='kw'>use</span> <span class='ident'>vecmath</span>::{
@@ -287,7 +287,7 @@
         <span class='kw'>if</span> <span class='ident'>back_end</span>.<span class='ident'>supports_clear_rgba</span>() {
             <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>();
             <span class='ident'>back_end</span>.<span class='ident'>clear_rgba</span>(<span class='ident'>color</span>[<span class='number'>0</span>], <span class='ident'>color</span>[<span class='number'>1</span>], <span class='ident'>color</span>[<span class='number'>2</span>], <span class='ident'>color</span>[<span class='number'>3</span>]);
-        }        
+        }
     }
 }
 

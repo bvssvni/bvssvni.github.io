@@ -158,10 +158,10 @@
 
     <span class='doccomment'>/// Should return true if texture has alpha channel.
 </span>    <span class='doccomment'>///
-</span>    <span class='doccomment'>/// This will enable alpha blending.  
-</span>    <span class='doccomment'>/// Alpha blending might be enabled if color per vertex has alpha.  
-</span>    <span class='doccomment'>/// Ignore if alpha blending is not supported.  
-</span>    <span class='doccomment'>/// Ignore if alpha channel is not used.  
+</span>    <span class='doccomment'>/// This will enable alpha blending.
+</span>    <span class='doccomment'>/// Alpha blending might be enabled if color per vertex has alpha.
+</span>    <span class='doccomment'>/// Ignore if alpha blending is not supported.
+</span>    <span class='doccomment'>/// Ignore if alpha channel is not used.
 </span>    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>has_texture_alpha</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>_texture_id</span>: <span class='ident'>uint</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='boolval'>false</span> }
 
@@ -171,8 +171,8 @@
 
     <span class='doccomment'>/// Renders list of 2d triangles with color assigned per vertex.
 </span>    <span class='kw'>fn</span> <span class='ident'>tri_list_xy_f64_rgba_f32</span>(
-        <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, 
-        <span class='ident'>_vertices</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f64</span>], 
+        <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
+        <span class='ident'>_vertices</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f64</span>],
         <span class='ident'>_colors</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>]
     ) {}
 
@@ -182,8 +182,8 @@
 
     <span class='doccomment'>/// Renders list of 2d triangles with color assigned per vertex.
 </span>    <span class='kw'>fn</span> <span class='ident'>tri_list_xy_f32_rgba_f32</span>(
-        <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, 
-        <span class='ident'>_vertices</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>], 
+        <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
+        <span class='ident'>_vertices</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>],
         <span class='ident'>_colors</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>]
     ) {}
 
@@ -193,8 +193,8 @@
 
     <span class='doccomment'>/// Renders list of 2d triangles.
 </span>    <span class='doccomment'>///
-</span>    <span class='doccomment'>/// A color and a texture coordinate is assigned per vertex.  
-</span>    <span class='doccomment'>/// The texture coordinates refers to the current single-texture.  
+</span>    <span class='doccomment'>/// A color and a texture coordinate is assigned per vertex.
+</span>    <span class='doccomment'>/// The texture coordinates refers to the current single-texture.
 </span>    <span class='kw'>fn</span> <span class='ident'>tri_list_xy_f32_rgba_f32_uv_f32</span>(
         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
         <span class='ident'>_vertices</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>],

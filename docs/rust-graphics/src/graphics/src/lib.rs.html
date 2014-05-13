@@ -228,6 +228,17 @@
 <span id='188'>188</span>
 <span id='189'>189</span>
 <span id='190'>190</span>
+<span id='191'>191</span>
+<span id='192'>192</span>
+<span id='193'>193</span>
+<span id='194'>194</span>
+<span id='195'>195</span>
+<span id='196'>196</span>
+<span id='197'>197</span>
+<span id='198'>198</span>
+<span id='199'>199</span>
+<span id='200'>200</span>
+<span id='201'>201</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_id</span> <span class='op'>=</span> <span class='string'>&quot;graphics&quot;</span>]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>missing_doc</span>)]</span>
@@ -256,12 +267,12 @@
 </span><span class='doccomment'>//!
 </span><span class='doccomment'>//! ```
 </span><span class='doccomment'>//! // ERROR: Borrowed value does not live long enough
-</span><span class='doccomment'>//! let rect = Context::new().rect(x, y, w, h); 
+</span><span class='doccomment'>//! let rect = Context::new().rect(x, y, w, h);
 </span><span class='doccomment'>//! ```
 </span><span class='doccomment'>//!
 </span><span class='doccomment'>//! This is because the lifetime of the first step only lives inside the expression.
 </span><span class='doccomment'>//! To solve this problem, break the statement into two parts, one for each step:
-</span><span class='doccomment'>//! 
+</span><span class='doccomment'>//!
 </span><span class='doccomment'>//! ```
 </span><span class='doccomment'>//! let c = Context::new();
 </span><span class='doccomment'>//! let rect = c.rect(x, y, w, h);
@@ -271,9 +282,6 @@
 </span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>std</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>Context</span> <span class='op'>=</span> <span class='ident'>context</span>::<span class='ident'>Context</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>BackEnd</span> <span class='op'>=</span> <span class='ident'>back_end</span>::<span class='ident'>BackEnd</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>RelativeTransform2d</span> <span class='op'>=</span> <span class='ident'>relative_transform2d</span>::<span class='ident'>RelativeTransform2d</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>AddColor</span> <span class='op'>=</span> <span class='ident'>add_color</span>::<span class='ident'>AddColor</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>AddEllipse</span> <span class='op'>=</span> <span class='ident'>add_ellipse</span>::<span class='ident'>AddEllipse</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>AddImage</span> <span class='op'>=</span> <span class='ident'>add_image</span>::<span class='ident'>AddImage</span>;
@@ -281,22 +289,29 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>AddPolygons</span> <span class='op'>=</span> <span class='ident'>add_polygons</span>::<span class='ident'>AddPolygons</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>AddRectangle</span> <span class='op'>=</span> <span class='ident'>add_rectangle</span>::<span class='ident'>AddRectangle</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>AddRound</span> <span class='op'>=</span> <span class='ident'>add_round</span>::<span class='ident'>AddRound</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>AddRoundBorder</span> <span class='op'>=</span> <span class='ident'>add_round_border</span>::<span class='ident'>AddRoundBorder</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>AddTween</span> <span class='op'>=</span> <span class='ident'>add_tween</span>::<span class='ident'>AddTween</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>RelativeColor</span> <span class='op'>=</span> <span class='ident'>relative_color</span>::<span class='ident'>RelativeColor</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>RelativeRectangle</span> <span class='op'>=</span> <span class='ident'>relative_rectangle</span>::<span class='ident'>RelativeRectangle</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>Draw</span> <span class='op'>=</span> <span class='ident'>draw</span>::<span class='ident'>Draw</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>Fill</span> <span class='op'>=</span> <span class='ident'>fill</span>::<span class='ident'>Fill</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>BackEnd</span> <span class='op'>=</span> <span class='ident'>back_end</span>::<span class='ident'>BackEnd</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>Clear</span> <span class='op'>=</span> <span class='ident'>clear</span>::<span class='ident'>Clear</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>ColorContext</span> <span class='op'>=</span> <span class='ident'>color_context</span>::<span class='ident'>ColorContext</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>Context</span> <span class='op'>=</span> <span class='ident'>context</span>::<span class='ident'>Context</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>Draw</span> <span class='op'>=</span> <span class='ident'>draw</span>::<span class='ident'>Draw</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>EllipseContext</span> <span class='op'>=</span> <span class='ident'>ellipse_context</span>::<span class='ident'>EllipseContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>EllipseColorContext</span> <span class='op'>=</span> <span class='ident'>ellipse_color_context</span>::<span class='ident'>EllipseColorContext</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>Fill</span> <span class='op'>=</span> <span class='ident'>fill</span>::<span class='ident'>Fill</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>ImageRectangleContext</span> <span class='op'>=</span> <span class='ident'>image_rectangle_context</span>::<span class='ident'>ImageRectangleContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>ImageRectangleColorContext</span> <span class='op'>=</span> <span class='ident'>image_rectangle_color_context</span>::<span class='ident'>ImageRectangleColorContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>LineContext</span> <span class='op'>=</span> <span class='ident'>line_context</span>::<span class='ident'>LineContext</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>LineColorContext</span> <span class='op'>=</span> <span class='ident'>line_color_context</span>::<span class='ident'>LineColorContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>PolygonContext</span> <span class='op'>=</span> <span class='ident'>polygon_context</span>::<span class='ident'>PolygonContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>PolygonColorContext</span> <span class='op'>=</span> <span class='ident'>polygon_color_context</span>::<span class='ident'>PolygonColorContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>RectangleContext</span> <span class='op'>=</span> <span class='ident'>rectangle_context</span>::<span class='ident'>RectangleContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>RectangleColorContext</span> <span class='op'>=</span> <span class='ident'>rectangle_color_context</span>::<span class='ident'>RectangleColorContext</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>RelativeColor</span> <span class='op'>=</span> <span class='ident'>relative_color</span>::<span class='ident'>RelativeColor</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>RelativeRectangle</span> <span class='op'>=</span> <span class='ident'>relative_rectangle</span>::<span class='ident'>RelativeRectangle</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>RelativeTransform2d</span> <span class='op'>=</span> <span class='ident'>relative_transform2d</span>::<span class='ident'>RelativeTransform2d</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>RoundBorderLineContext</span> <span class='op'>=</span> <span class='ident'>round_border_line_context</span>::<span class='ident'>RoundBorderLineContext</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>RoundBorderLineColorContext</span> <span class='op'>=</span> <span class='ident'>round_border_line_color_context</span>::<span class='ident'>RoundBorderLineColorContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>RoundRectangleContext</span> <span class='op'>=</span> <span class='ident'>round_rectangle_context</span>::<span class='ident'>RoundRectangleContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>RoundRectangleColorContext</span> <span class='op'>=</span> <span class='ident'>round_rectangle_color_context</span>::<span class='ident'>RoundRectangleColorContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>TweenContext</span> <span class='op'>=</span> <span class='ident'>tween_context</span>::<span class='ident'>TweenContext</span>;
@@ -305,10 +320,6 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>TweenPolygonsColorContext</span> <span class='op'>=</span> <span class='ident'>tween_polygons_color_context</span>::<span class='ident'>TweenPolygonsColorContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>View</span> <span class='op'>=</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
 
-<span class='kw'>mod</span> <span class='ident'>internal</span>;
-<span class='kw'>mod</span> <span class='ident'>context</span>;
-<span class='kw'>mod</span> <span class='ident'>back_end</span>;
-<span class='kw'>mod</span> <span class='ident'>relative_transform2d</span>;
 <span class='kw'>mod</span> <span class='ident'>add_color</span>;
 <span class='kw'>mod</span> <span class='ident'>add_ellipse</span>;
 <span class='kw'>mod</span> <span class='ident'>add_image</span>;
@@ -316,33 +327,42 @@
 <span class='kw'>mod</span> <span class='ident'>add_polygons</span>;
 <span class='kw'>mod</span> <span class='ident'>add_rectangle</span>;
 <span class='kw'>mod</span> <span class='ident'>add_round</span>;
+<span class='kw'>mod</span> <span class='ident'>add_round_border</span>;
 <span class='kw'>mod</span> <span class='ident'>add_tween</span>;
-<span class='kw'>mod</span> <span class='ident'>relative_color</span>;
-<span class='kw'>mod</span> <span class='ident'>relative_rectangle</span>;
-<span class='kw'>mod</span> <span class='ident'>draw</span>;
-<span class='kw'>mod</span> <span class='ident'>fill</span>;
+<span class='kw'>mod</span> <span class='ident'>back_end</span>;
 <span class='kw'>mod</span> <span class='ident'>clear</span>;
 <span class='kw'>mod</span> <span class='ident'>color_context</span>;
-<span class='kw'>mod</span> <span class='ident'>ellipse_context</span>;
+<span class='kw'>mod</span> <span class='ident'>context</span>;
+<span class='kw'>mod</span> <span class='ident'>draw</span>;
 <span class='kw'>mod</span> <span class='ident'>ellipse_color_context</span>;
-<span class='kw'>mod</span> <span class='ident'>image_rectangle_context</span>;
+<span class='kw'>mod</span> <span class='ident'>ellipse_context</span>;
+<span class='kw'>mod</span> <span class='ident'>fill</span>;
 <span class='kw'>mod</span> <span class='ident'>image_rectangle_color_context</span>;
+<span class='kw'>mod</span> <span class='ident'>image_rectangle_context</span>;
+<span class='kw'>mod</span> <span class='ident'>internal</span>;
+<span class='kw'>mod</span> <span class='ident'>line_color_context</span>;
 <span class='kw'>mod</span> <span class='ident'>line_context</span>;
-<span class='kw'>mod</span> <span class='ident'>polygon_context</span>;
 <span class='kw'>mod</span> <span class='ident'>polygon_color_context</span>;
-<span class='kw'>mod</span> <span class='ident'>rectangle_context</span>;
+<span class='kw'>mod</span> <span class='ident'>polygon_context</span>;
 <span class='kw'>mod</span> <span class='ident'>rectangle_color_context</span>;
-<span class='kw'>mod</span> <span class='ident'>round_rectangle_context</span>;
+<span class='kw'>mod</span> <span class='ident'>rectangle_context</span>;
+<span class='kw'>mod</span> <span class='ident'>relative_color</span>;
+<span class='kw'>mod</span> <span class='ident'>relative_rectangle</span>;
+<span class='kw'>mod</span> <span class='ident'>relative_transform2d</span>;
+<span class='kw'>mod</span> <span class='ident'>round_border_line_color_context</span>;
+<span class='kw'>mod</span> <span class='ident'>round_border_line_context</span>;
 <span class='kw'>mod</span> <span class='ident'>round_rectangle_color_context</span>;
-<span class='kw'>mod</span> <span class='ident'>tween_context</span>;
+<span class='kw'>mod</span> <span class='ident'>round_rectangle_context</span>;
 <span class='kw'>mod</span> <span class='ident'>tween_color_context</span>;
-<span class='kw'>mod</span> <span class='ident'>tween_polygons_context</span>;
+<span class='kw'>mod</span> <span class='ident'>tween_context</span>;
 <span class='kw'>mod</span> <span class='ident'>tween_polygons_color_context</span>;
+<span class='kw'>mod</span> <span class='ident'>tween_polygons_context</span>;
 <span class='kw'>mod</span> <span class='ident'>view</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>vecmath</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>triangulation</span>;
+
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>interpolation</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>modular_index</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>triangulation</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>vecmath</span>;
 
 <span class='doccomment'>/// [red, green, blue, alpha]
 </span><span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Color</span> <span class='op'>=</span> [<span class='ident'>f32</span>, ..<span class='number'>4</span>];
@@ -350,12 +370,9 @@
 <span class='doccomment'>/// [x1, y1, x2, y2]
 </span><span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Line</span> <span class='op'>=</span> [<span class='ident'>f64</span>, ..<span class='number'>4</span>];
 
-<span class='doccomment'>/// [x, y, dir_x, dir_y]
-</span><span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Ray</span> <span class='op'>=</span> [<span class='ident'>f64</span>, ..<span class='number'>4</span>];
-
-<span class='doccomment'>/// [m00, m01, m02, m10, m11, m12]  
+<span class='doccomment'>/// [m00, m01, m02, m10, m11, m12]
 </span><span class='doccomment'>///
-</span><span class='doccomment'>/// The first 3 numbers transforms `x`,  
+</span><span class='doccomment'>/// The first 3 numbers transforms `x`,
 </span><span class='doccomment'>/// the last 3 numbers transforms `y`:
 </span><span class='doccomment'>///
 </span><span class='doccomment'>/// ```
@@ -367,6 +384,11 @@
 <span class='doccomment'>/// [x, y, w, h]
 </span><span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>PixelRectangle</span> <span class='op'>=</span> [<span class='ident'>u32</span>, ..<span class='number'>4</span>];
 
+<span class='doccomment'>/// [x, y, dir_x, dir_y]
+</span><span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Ray</span> <span class='op'>=</span> [<span class='ident'>f64</span>, ..<span class='number'>4</span>];
+
+<span class='doccomment'>/// [radius, width]
+</span><span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>RoundBorder</span> <span class='op'>=</span> [<span class='ident'>f64</span>, ..<span class='number'>2</span>];
 <span class='doccomment'>/// [x, y, w, h]
 </span><span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Rectangle</span> <span class='op'>=</span> [<span class='ident'>f64</span>, ..<span class='number'>4</span>];
 
@@ -399,15 +421,15 @@
 
 <span class='doccomment'>/// Represents an image.
 </span><span class='doccomment'>///
-</span><span class='doccomment'>/// Images are often packed together in sprite sheets.  
-</span><span class='doccomment'>/// For this reason it refers to a rectangle within a texture.  
+</span><span class='doccomment'>/// Images are often packed together in sprite sheets.
+</span><span class='doccomment'>/// For this reason it refers to a rectangle within a texture.
 </span><span class='doccomment'>///
-</span><span class='doccomment'>/// The texture is a unique identifier recognized by the back-end.  
-</span><span class='doccomment'>/// An image contains the size of a texture to be able to  
-</span><span class='doccomment'>/// compute normalized coordinates.  
+</span><span class='doccomment'>/// The texture is a unique identifier recognized by the back-end.
+</span><span class='doccomment'>/// An image contains the size of a texture to be able to
+</span><span class='doccomment'>/// compute normalized coordinates.
 </span><span class='doccomment'>///
-</span><span class='doccomment'>/// There is no garbage collection of textures,  
-</span><span class='doccomment'>/// this responsibility is given to the back-end.  
+</span><span class='doccomment'>/// There is no garbage collection of textures,
+</span><span class='doccomment'>/// this responsibility is given to the back-end.
 </span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Image</span> {
     <span class='doccomment'>/// A unique identifier of the texture, recognizable by back-end.
 </span>    <span class='kw'>pub</span> <span class='ident'>texture_id</span>: <span class='ident'>uint</span>,

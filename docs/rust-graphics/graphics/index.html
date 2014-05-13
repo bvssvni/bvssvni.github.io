@@ -39,7 +39,7 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'>Crate <a class='mod' href=''>graphics</a><a class='source' href='../src/graphics/src/lib.rs.html#1-189'>[src]</a></h1>
+<h1 class='fqn'>Crate <a class='mod' href=''>graphics</a><a class='source' href='../src/graphics/src/lib.rs.html#1-200'>[src]</a></h1>
 <div class='docblock'><p>A library for 2D graphics that works with multiple back-ends.</p>
 
 <p>To implement your own back-end, use the BackEnd trait.</p>
@@ -62,7 +62,7 @@ You do not have to specify which back-end to use before doing the actual drawing
 it is not possible to do two or more steps at a time and assign it to a variable:</p>
 <pre class='rust '>
 <span class='comment'>// ERROR: Borrowed value does not live long enough
-</span><span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Context</span>::<span class='ident'>new</span>().<span class='ident'>rect</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>w</span>, <span class='ident'>h</span>); 
+</span><span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='ident'>Context</span>::<span class='ident'>new</span>().<span class='ident'>rect</span>(<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>w</span>, <span class='ident'>h</span>);
 </pre>
 
 <p>This is because the lifetime of the first step only lives inside the expression.
@@ -154,6 +154,13 @@ To solve this problem, break the statement into two parts, one for each step:</p
                     </tr>
                 
                     <tr>
+                        <td><a class='struct' href='struct.LineColorContext.html'
+                               title='graphics::LineColorContext'>LineColorContext</a></td>
+                        <td class='docblock short'><p>A line context.</p>
+</td>
+                    </tr>
+                
+                    <tr>
                         <td><a class='struct' href='struct.LineContext.html'
                                title='graphics::LineContext'>LineContext</a></td>
                         <td class='docblock short'><p>A line context.</p>
@@ -185,6 +192,20 @@ To solve this problem, break the statement into two parts, one for each step:</p
                         <td><a class='struct' href='struct.RectangleContext.html'
                                title='graphics::RectangleContext'>RectangleContext</a></td>
                         <td class='docblock short'><p>A rectangle context.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='struct' href='struct.RoundBorderLineColorContext.html'
+                               title='graphics::RoundBorderLineColorContext'>RoundBorderLineColorContext</a></td>
+                        <td class='docblock short'><p>A line context with round border information.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='struct' href='struct.RoundBorderLineContext.html'
+                               title='graphics::RoundBorderLineContext'>RoundBorderLineContext</a></td>
+                        <td class='docblock short'><p>A line context with round border information.</p>
 </td>
                     </tr>
                 
@@ -287,6 +308,13 @@ that is partially based on an existing structure.</p>
                         <td><a class='trait' href='trait.AddRound.html'
                                title='graphics::AddRound'>AddRound</a></td>
                         <td class='docblock short'><p>Implemented by contexts that can make a shape rounder.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='trait' href='trait.AddRoundBorder.html'
+                               title='graphics::AddRoundBorder'>AddRoundBorder</a></td>
+                        <td class='docblock short'><p>Implemented by contexts that can add round border.</p>
 </td>
                     </tr>
                 
@@ -394,6 +422,13 @@ This trait uses default methods to simplify implementation.</p>
                         <td><a class='typedef' href='typedef.Rectangle.html'
                                title='graphics::Rectangle'>Rectangle</a></td>
                         <td class='docblock short'><p>[x, y, w, h]</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='typedef' href='typedef.RoundBorder.html'
+                               title='graphics::RoundBorder'>RoundBorder</a></td>
+                        <td class='docblock short'><p>[radius, width]</p>
 </td>
                     </tr>
                 

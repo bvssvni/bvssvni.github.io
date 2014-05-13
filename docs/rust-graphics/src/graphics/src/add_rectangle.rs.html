@@ -97,9 +97,9 @@
     <span class='doccomment'>/// Adds a square with coordinates in the center.
 </span>    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>square_centered</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>center_x</span>: <span class='ident'>f64</span>, <span class='ident'>center_y</span>: <span class='ident'>f64</span>, <span class='ident'>radius</span>: <span class='ident'>f64</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
-        <span class='self'>self</span>.<span class='ident'>rect</span>(<span class='ident'>center_x</span> <span class='op'>-</span> <span class='ident'>radius</span>, 
-                  <span class='ident'>center_y</span> <span class='op'>-</span> <span class='ident'>radius</span>, 
-                  <span class='number'>2.0</span> <span class='op'>*</span> <span class='ident'>radius</span>, 
+        <span class='self'>self</span>.<span class='ident'>rect</span>(<span class='ident'>center_x</span> <span class='op'>-</span> <span class='ident'>radius</span>,
+                  <span class='ident'>center_y</span> <span class='op'>-</span> <span class='ident'>radius</span>,
+                  <span class='number'>2.0</span> <span class='op'>*</span> <span class='ident'>radius</span>,
                   <span class='number'>2.0</span> <span class='op'>*</span> <span class='ident'>radius</span>)
     }
 }

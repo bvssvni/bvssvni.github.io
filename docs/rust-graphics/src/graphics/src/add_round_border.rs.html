@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The graphics library documentation.">
 
-    <title>graphics::vecmath::scale - Rust</title>
+    <title>add_round_border.rs.html -- source</title>
 
     <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
           rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
 
     
 </head>
@@ -24,7 +24,7 @@
     <section class="sidebar">
         
 
-        <p class='location'><a href='../index.html'>graphics</a>&#8203;::<a href='index.html'>vecmath</a></p><div class='block fn'><h2>Functions</h2><a class='fn ' href='fn.area.html'>area</a><br/><a class='fn ' href='fn.area_centroid.html'>area_centroid</a><br/><a class='fn ' href='fn.centroid.html'>centroid</a><br/><a class='fn ' href='fn.identity.html'>identity</a><br/><a class='fn ' href='fn.inside_triangle.html'>inside_triangle</a><br/><a class='fn ' href='fn.least_separation_4.html'>least_separation_4</a><br/><a class='fn ' href='fn.line_side.html'>line_side</a><br/><a class='fn ' href='fn.margin_rectangle.html'>margin_rectangle</a><br/><a class='fn ' href='fn.modular_offset.html'>modular_offset</a><br/><a class='fn ' href='fn.multiply.html'>multiply</a><br/><a class='fn ' href='fn.orient.html'>orient</a><br/><a class='fn ' href='fn.relative_rectangle.html'>relative_rectangle</a><br/><a class='fn ' href='fn.rotate_radians.html'>rotate_radians</a><br/><a class='fn current' href='fn.scale.html'>scale</a><br/><a class='fn ' href='fn.separation.html'>separation</a><br/><a class='fn ' href='fn.shear.html'>shear</a><br/><a class='fn ' href='fn.translate.html'>translate</a><br/><a class='fn ' href='fn.triangle_face.html'>triangle_face</a><br/></div>
+        
     </section>
 
     <nav class="sub">
@@ -38,10 +38,23 @@
         </form>
     </nav>
 
-    <section id='main' class="content fn">
-<h1 class='fqn'>Function <a href='../index.html'>graphics</a>::<a href='index.html'>vecmath</a>::<a class='fn' href=''>scale</a><a class='source' href='../../src/graphics/src/vecmath.rs.html#57-60'>[src]</a></h1>
-<pre class='rust fn'>pub fn scale(sx: f64, sy: f64) -&gt; <a class='typedef' href='../../graphics/typedef.Matrix2d.html' title='graphics::Matrix2d'>Matrix2d</a></pre><div class='docblock'><p>Create a scale matrix.</p>
-</div></section>
+    <section id='main' class="content source"><pre class='line-numbers'><span id='1'>1</span>
+<span id='2'>2</span>
+<span id='3'>3</span>
+<span id='4'>4</span>
+<span id='5'>5</span>
+<span id='6'>6</span>
+<span id='7'>7</span>
+</pre><pre class='rust '>
+
+<span class='doccomment'>/// Implemented by contexts that can add round border.
+</span><span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>AddRoundBorder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>/// Adds a round radius and a width.
+</span>    <span class='kw'>fn</span> <span class='ident'>round_border</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>radius</span>: <span class='ident'>f64</span>, <span class='ident'>width</span>: <span class='ident'>f64</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span>;
+}
+
+</pre>
+</section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -78,11 +91,11 @@
     </div>
 
     <script>
-        var rootPath = "../../";
+        var rootPath = "../../../";
         var currentCrate = "graphics";
     </script>
-    <script src="../../jquery.js"></script>
-    <script src="../../main.js"></script>
-    <script async src="../../search-index.js"></script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    <script async src="../../../search-index.js"></script>
 </body>
 </html>

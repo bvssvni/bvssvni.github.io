@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The graphics library documentation.">
 
-    <title>view.rs.html -- source</title>
+    <title>round_border_line_color_context.rs.html -- source</title>
 
     <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
           rel='stylesheet' type='text/css'>
@@ -59,26 +59,28 @@
 <span id='19'>19</span>
 <span id='20'>20</span>
 <span id='21'>21</span>
+<span id='22'>22</span>
 </pre><pre class='rust '>
+<span class='kw'>use</span> {
+    <span class='ident'>Color</span>,
+    <span class='ident'>Field</span>,
+    <span class='ident'>Line</span>,
+    <span class='ident'>Matrix2d</span>,
+    <span class='ident'>RoundBorder</span>,
+};
 
-<span class='doccomment'>/// Should be implemented by contexts that draws something relative to view.
-</span><span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>View</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Moves the current transform to the view coordinate system.
-</span>    <span class='doccomment'>///
-</span>    <span class='doccomment'>/// This is usually [0.0, 0.0] in the upper left corner
-</span>    <span class='doccomment'>/// with the x axis pointing to the right
-</span>    <span class='doccomment'>/// and the y axis pointing down.
-</span>    <span class='kw'>fn</span> <span class='ident'>view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>;
-
-    <span class='doccomment'>/// Moves the current transform to the default coordinate system.
-</span>    <span class='doccomment'>///
-</span>    <span class='doccomment'>/// This is usually [0.0, 0.0] in the center
-</span>    <span class='doccomment'>/// with the x axis pointing to the right
-</span>    <span class='doccomment'>/// and the y axis pointing up.
-</span>    <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>;
-
-    <span class='doccomment'>/// Stores the current transform as new view.
-</span>    <span class='kw'>fn</span> <span class='ident'>store_view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>;
+<span class='doccomment'>/// A line context with round border information.
+</span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>/// Base/original transform.
+</span>    <span class='kw'>pub</span> <span class='ident'>base</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span>,
+    <span class='doccomment'>/// Current transform.
+</span>    <span class='kw'>pub</span> <span class='ident'>transform</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span>,
+    <span class='doccomment'>/// Current line.
+</span>    <span class='kw'>pub</span> <span class='ident'>line</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Line</span><span class='op'>&gt;</span>,
+    <span class='doccomment'>/// Current color.
+</span>    <span class='kw'>pub</span> <span class='ident'>color</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Color</span><span class='op'>&gt;</span>,
+    <span class='doccomment'>/// Current round border.
+</span>    <span class='kw'>pub</span> <span class='ident'>round_border</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>RoundBorder</span><span class='op'>&gt;</span>,
 }
 
 </pre>
