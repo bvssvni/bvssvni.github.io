@@ -331,7 +331,7 @@
             <span class='ident'>back_end</span>.<span class='ident'>enable_single_texture</span>(<span class='ident'>texture_id</span>);
             <span class='ident'>back_end</span>.<span class='ident'>tri_list_xy_f32_rgba_f32_uv_f32</span>(
                 <span class='ident'>rect_tri_list_xy_f32</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>(), <span class='ident'>rect</span>),
-                <span class='ident'>rect_tri_list_rgba_f32</span>(<span class='ident'>color</span>),
+                <span class='ident'>rect_tri_list_rgba_f32</span>(<span class='kw-2'>&amp;</span><span class='ident'>color</span>),
                 <span class='ident'>rect_tri_list_uv_f32</span>(<span class='self'>self</span>.<span class='ident'>image</span>.<span class='ident'>get</span>())
             );
             <span class='ident'>back_end</span>.<span class='ident'>disable_single_texture</span>();
