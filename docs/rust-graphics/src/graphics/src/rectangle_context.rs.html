@@ -185,12 +185,28 @@
 <span id='145'>145</span>
 <span id='146'>146</span>
 <span id='147'>147</span>
+<span id='148'>148</span>
+<span id='149'>149</span>
+<span id='150'>150</span>
+<span id='151'>151</span>
+<span id='152'>152</span>
+<span id='153'>153</span>
+<span id='154'>154</span>
+<span id='155'>155</span>
+<span id='156'>156</span>
+<span id='157'>157</span>
+<span id='158'>158</span>
+<span id='159'>159</span>
+<span id='160'>160</span>
+<span id='161'>161</span>
 </pre><pre class='rust '>
 
 <span class='kw'>use</span> {
+    <span class='ident'>AddBevel</span>,
     <span class='ident'>AddColor</span>,
     <span class='ident'>AddImage</span>,
     <span class='ident'>AddRound</span>,
+    <span class='ident'>BevelRectangleContext</span>,
     <span class='ident'>Borrowed</span>,
     <span class='ident'>Field</span>,
     <span class='ident'>Image</span>,
@@ -289,6 +305,18 @@
             <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
             <span class='ident'>rect</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>()),
             <span class='ident'>round_radius</span>: <span class='ident'>Value</span>(<span class='ident'>radius</span>),
+        }
+    }
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>AddBevel</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>BevelRectangleContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>RectangleContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+    <span class='kw'>fn</span> <span class='ident'>bevel</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>radius</span>: <span class='ident'>f64</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelRectangleContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>BevelRectangleContext</span> {
+            <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
+            <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
+            <span class='ident'>rect</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>()),
+            <span class='ident'>bevel_radius</span>: <span class='ident'>Value</span>(<span class='ident'>radius</span>),
         }
     }
 }

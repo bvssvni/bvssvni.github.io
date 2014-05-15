@@ -39,13 +39,22 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'>Crate <a class='mod' href=''>graphics</a><a class='source' href='../src/graphics/src/lib.rs.html#1-214'>[src]</a></h1>
+<h1 class='fqn'>Crate <a class='mod' href=''>graphics</a><a class='source' href='../src/graphics/src/lib.rs.html#1-230'>[src]</a></h1>
 <div class='docblock'><p>A library for 2D graphics that works with multiple back-ends.</p>
 
 <p>To implement your own back-end, use the BackEnd trait.</p>
 
 <h2 id="usage" class='section-header'><a
                            href="#usage">Usage</a></h2>
+<p>If you are using <a href="https://github.com/bvssvni/rust-empty">Rust-Empty</a> or Cargo, put the compiled library in the &quot;target/cpu-vendor-platform/lib/&quot; directory, then add the following to your source:</p>
+<pre class='rust '>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>globs</span>)]</span><span class='comment'> // Allow global imports
+
+</span><span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>graphics</span>;<span class='comment'> // Link to &#39;graphics&#39; library
+
+</span><span class='kw'>use</span> <span class='ident'>graphics</span>::<span class='op'>*</span>;<span class='comment'> // Use the graphics types in the module
+</span></pre>
+
 <p>To draw to the back-end, you need a context.
 The context contains the information necessary to perform the drawing.
 Unlike other graphics libraries, this library is not bound to the back-end.
@@ -115,6 +124,20 @@ To solve this problem, break the statement into two parts, one for each step:</p
                         <td><a class='struct' href='struct.BevelBorderLineContext.html'
                                title='graphics::BevelBorderLineContext'>BevelBorderLineContext</a></td>
                         <td class='docblock short'><p>A line context with bevel border information.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='struct' href='struct.BevelRectangleColorContext.html'
+                               title='graphics::BevelRectangleColorContext'>BevelRectangleColorContext</a></td>
+                        <td class='docblock short'><p>A rectangle color context.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='struct' href='struct.BevelRectangleContext.html'
+                               title='graphics::BevelRectangleContext'>BevelRectangleContext</a></td>
+                        <td class='docblock short'><p>A bevel rectangle context.</p>
 </td>
                     </tr>
                 
@@ -290,6 +313,13 @@ that is partially based on an existing structure.</p>
                     </tr>
                 </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
+                    <tr>
+                        <td><a class='trait' href='trait.AddBevel.html'
+                               title='graphics::AddBevel'>AddBevel</a></td>
+                        <td class='docblock short'><p>Implemented by contexts that can make a shape bevel.</p>
+</td>
+                    </tr>
+                
                     <tr>
                         <td><a class='trait' href='trait.AddBevelBorder.html'
                                title='graphics::AddBevelBorder'>AddBevelBorder</a></td>

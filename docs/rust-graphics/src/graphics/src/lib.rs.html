@@ -253,6 +253,22 @@
 <span id='213'>213</span>
 <span id='214'>214</span>
 <span id='215'>215</span>
+<span id='216'>216</span>
+<span id='217'>217</span>
+<span id='218'>218</span>
+<span id='219'>219</span>
+<span id='220'>220</span>
+<span id='221'>221</span>
+<span id='222'>222</span>
+<span id='223'>223</span>
+<span id='224'>224</span>
+<span id='225'>225</span>
+<span id='226'>226</span>
+<span id='227'>227</span>
+<span id='228'>228</span>
+<span id='229'>229</span>
+<span id='230'>230</span>
+<span id='231'>231</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_id</span> <span class='op'>=</span> <span class='string'>&quot;graphics&quot;</span>]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>missing_doc</span>)]</span>
@@ -262,6 +278,16 @@
 </span><span class='doccomment'>//! To implement your own back-end, use the BackEnd trait.
 </span><span class='doccomment'>//!
 </span><span class='doccomment'>//! ## Usage
+</span><span class='doccomment'>//!
+</span><span class='doccomment'>//! If you are using [Rust-Empty](https://github.com/bvssvni/rust-empty) or Cargo, put the compiled library in the &quot;target/cpu-vendor-platform/lib/&quot; directory, then add the following to your source:
+</span><span class='doccomment'>//!
+</span><span class='doccomment'>//! ```Rust
+</span><span class='doccomment'>//! #![feature(globs)] // Allow global imports
+</span><span class='doccomment'>//!
+</span><span class='doccomment'>//! extern crate graphics; // Link to &#39;graphics&#39; library
+</span><span class='doccomment'>//!
+</span><span class='doccomment'>//! use graphics::*; // Use the graphics types in the module
+</span><span class='doccomment'>//! ```
 </span><span class='doccomment'>//!
 </span><span class='doccomment'>//! To draw to the back-end, you need a context.
 </span><span class='doccomment'>//! The context contains the information necessary to perform the drawing.
@@ -296,6 +322,7 @@
 </span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>std</span>;
 
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>AddBevel</span> <span class='op'>=</span> <span class='ident'>add_bevel</span>::<span class='ident'>AddBevel</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>AddBevelBorder</span> <span class='op'>=</span> <span class='ident'>add_bevel_border</span>::<span class='ident'>AddBevelBorder</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>AddColor</span> <span class='op'>=</span> <span class='ident'>add_color</span>::<span class='ident'>AddColor</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>AddEllipse</span> <span class='op'>=</span> <span class='ident'>add_ellipse</span>::<span class='ident'>AddEllipse</span>;
@@ -311,6 +338,8 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>BackEnd</span> <span class='op'>=</span> <span class='ident'>back_end</span>::<span class='ident'>BackEnd</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>BevelBorderLineColorContext</span> <span class='op'>=</span> <span class='ident'>bevel_border_line_color_context</span>::<span class='ident'>BevelBorderLineColorContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>BevelBorderLineContext</span> <span class='op'>=</span> <span class='ident'>bevel_border_line_context</span>::<span class='ident'>BevelBorderLineContext</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>BevelRectangleColorContext</span> <span class='op'>=</span> <span class='ident'>bevel_rectangle_color_context</span>::<span class='ident'>BevelRectangleColorContext</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>BevelRectangleContext</span> <span class='op'>=</span> <span class='ident'>bevel_rectangle_context</span>::<span class='ident'>BevelRectangleContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>Clear</span> <span class='op'>=</span> <span class='ident'>clear</span>::<span class='ident'>Clear</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>ColorContext</span> <span class='op'>=</span> <span class='ident'>color_context</span>::<span class='ident'>ColorContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>Context</span> <span class='op'>=</span> <span class='ident'>context</span>::<span class='ident'>Context</span>;
@@ -342,6 +371,7 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>TweenPolygonsColorContext</span> <span class='op'>=</span> <span class='ident'>tween_polygons_color_context</span>::<span class='ident'>TweenPolygonsColorContext</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>View</span> <span class='op'>=</span> <span class='ident'>view</span>::<span class='ident'>View</span>;
 
+<span class='kw'>mod</span> <span class='ident'>add_bevel</span>;
 <span class='kw'>mod</span> <span class='ident'>add_bevel_border</span>;
 <span class='kw'>mod</span> <span class='ident'>add_color</span>;
 <span class='kw'>mod</span> <span class='ident'>add_ellipse</span>;
@@ -357,6 +387,8 @@
 <span class='kw'>mod</span> <span class='ident'>back_end</span>;
 <span class='kw'>mod</span> <span class='ident'>bevel_border_line_color_context</span>;
 <span class='kw'>mod</span> <span class='ident'>bevel_border_line_context</span>;
+<span class='kw'>mod</span> <span class='ident'>bevel_rectangle_color_context</span>;
+<span class='kw'>mod</span> <span class='ident'>bevel_rectangle_context</span>;
 <span class='kw'>mod</span> <span class='ident'>clear</span>;
 <span class='kw'>mod</span> <span class='ident'>color_context</span>;
 <span class='kw'>mod</span> <span class='ident'>context</span>;

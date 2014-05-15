@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The graphics library documentation.">
 
-    <title>rectangle_color_context.rs.html -- source</title>
+    <title>bevel_rectangle_color_context.rs.html -- source</title>
 
     <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
           rel='stylesheet' type='text/css'>
@@ -213,65 +213,24 @@
 <span id='173'>173</span>
 <span id='174'>174</span>
 <span id='175'>175</span>
-<span id='176'>176</span>
-<span id='177'>177</span>
-<span id='178'>178</span>
-<span id='179'>179</span>
-<span id='180'>180</span>
-<span id='181'>181</span>
-<span id='182'>182</span>
-<span id='183'>183</span>
-<span id='184'>184</span>
-<span id='185'>185</span>
-<span id='186'>186</span>
-<span id='187'>187</span>
-<span id='188'>188</span>
-<span id='189'>189</span>
-<span id='190'>190</span>
-<span id='191'>191</span>
-<span id='192'>192</span>
-<span id='193'>193</span>
-<span id='194'>194</span>
-<span id='195'>195</span>
-<span id='196'>196</span>
-<span id='197'>197</span>
-<span id='198'>198</span>
-<span id='199'>199</span>
-<span id='200'>200</span>
-<span id='201'>201</span>
-<span id='202'>202</span>
-<span id='203'>203</span>
-<span id='204'>204</span>
-<span id='205'>205</span>
-<span id='206'>206</span>
-<span id='207'>207</span>
 </pre><pre class='rust '>
-
 <span class='kw'>use</span> {
-    <span class='ident'>AddBevel</span>,
-    <span class='ident'>AddImage</span>,
-    <span class='ident'>AddRound</span>,
     <span class='ident'>BackEnd</span>,
-    <span class='ident'>BevelRectangleColorContext</span>,
     <span class='ident'>Borrowed</span>,
     <span class='ident'>Clear</span>,
     <span class='ident'>Color</span>,
     <span class='ident'>Field</span>,
     <span class='ident'>Fill</span>,
-    <span class='ident'>Image</span>,
-    <span class='ident'>ImageRectangleColorContext</span>,
     <span class='ident'>Matrix2d</span>,
     <span class='ident'>Rectangle</span>,
-    <span class='ident'>RoundRectangleColorContext</span>,
     <span class='ident'>Value</span>,
-    <span class='ident'>View</span>
+    <span class='ident'>View</span>,
 };
 <span class='kw'>use</span> <span class='ident'>vecmath</span>::{
     <span class='ident'>identity</span>,
 };
 <span class='kw'>use</span> <span class='ident'>triangulation</span>::{
-    <span class='ident'>rect_tri_list_xy_f32</span>,
-    <span class='ident'>rect_tri_list_rgba_f32</span>,
+    <span class='ident'>with_round_rectangle_tri_list_xy_f32_rgba_f32</span>
 };
 <span class='kw'>use</span> <span class='ident'>internal</span>::{
     <span class='ident'>CanColor</span>,
@@ -283,96 +242,80 @@
 };
 
 <span class='doccomment'>/// A rectangle color context.
-</span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+</span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Base/original transformation.
 </span>    <span class='kw'>pub</span> <span class='ident'>base</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// Current transformation.
 </span>    <span class='kw'>pub</span> <span class='ident'>transform</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// Current rectangle.
 </span>    <span class='kw'>pub</span> <span class='ident'>rect</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Rectangle</span><span class='op'>&gt;</span>,
+    <span class='doccomment'>/// Current bevel radius.
+</span>    <span class='kw'>pub</span> <span class='ident'>bevel_radius</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>f64</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// Current color.
 </span>    <span class='kw'>pub</span> <span class='ident'>color</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Color</span><span class='op'>&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>get_transform</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Matrix2d</span> {
         <span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>CanTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>CanTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>transform</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Matrix2d</span>) <span class='op'>-&gt;</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>RectangleColorContext</span> {
+    <span class='kw'>fn</span> <span class='ident'>transform</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Matrix2d</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>BevelRectangleColorContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Value</span>(<span class='ident'>value</span>),
             <span class='ident'>rect</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>()),
+            <span class='ident'>bevel_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>bevel_radius</span>.<span class='ident'>get</span>()),
             <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasColor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Color</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasColor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Color</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>get_color</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Color</span> {
         <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>CanColor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>Color</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>CanColor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>Color</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>color</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Color</span>) <span class='op'>-&gt;</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>RectangleColorContext</span> {
+    <span class='kw'>fn</span> <span class='ident'>color</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Color</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>BevelRectangleColorContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
             <span class='ident'>color</span>: <span class='ident'>Value</span>(<span class='ident'>value</span>),
             <span class='ident'>rect</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>()),
+            <span class='ident'>bevel_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>bevel_radius</span>.<span class='ident'>get</span>()),
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasRectangle</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Rectangle</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasRectangle</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Rectangle</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>get_rectangle</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Rectangle</span> {
         <span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>CanRectangle</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>Rectangle</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>CanRectangle</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>Rectangle</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>rectangle</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>rect</span>: <span class='ident'>Rectangle</span>) <span class='op'>-&gt;</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>RectangleColorContext</span> {
+    <span class='kw'>fn</span> <span class='ident'>rectangle</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>rect</span>: <span class='ident'>Rectangle</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>BevelRectangleColorContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
             <span class='ident'>rect</span>: <span class='ident'>Value</span>(<span class='ident'>rect</span>),
+            <span class='ident'>bevel_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>bevel_radius</span>.<span class='ident'>get</span>()),
             <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Fill</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>fill</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>BackEnd</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>back_end</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) {
-        <span class='kw'>if</span> <span class='ident'>back_end</span>.<span class='ident'>supports_tri_list_xy_f32_rgba_f32</span>() {
-            <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>();
-            <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>();<span class='comment'>
-            // Complete transparency does not need to be rendered.
-            </span><span class='kw'>if</span> <span class='ident'>color</span>[<span class='number'>3</span>] <span class='op'>==</span> <span class='number'>0.0</span> { <span class='kw'>return</span>; }<span class='comment'>
-            // Turn on alpha blending if not completely opaque.
-            </span><span class='kw'>let</span> <span class='ident'>needs_alpha</span> <span class='op'>=</span> <span class='ident'>color</span>[<span class='number'>3</span>] <span class='op'>!=</span> <span class='number'>1.0</span>;
-            <span class='kw'>if</span> <span class='ident'>needs_alpha</span> { <span class='ident'>back_end</span>.<span class='ident'>enable_alpha_blend</span>(); }
-            <span class='ident'>back_end</span>.<span class='ident'>tri_list_xy_f32_rgba_f32</span>(
-                <span class='ident'>rect_tri_list_xy_f32</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>(), <span class='ident'>rect</span>),
-                <span class='ident'>rect_tri_list_rgba_f32</span>(<span class='ident'>color</span>)
-            );
-            <span class='kw'>if</span> <span class='ident'>needs_alpha</span> { <span class='ident'>back_end</span>.<span class='ident'>disable_alpha_blend</span>(); }
-        } <span class='kw'>else</span> {
-            <span class='macro'>unimplemented</span><span class='macro'>!</span>();
-        }
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Clear</span> <span class='kw'>for</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Clear</span> <span class='kw'>for</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>clear</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>BackEnd</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>back_end</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) {
         <span class='kw'>if</span> <span class='ident'>back_end</span>.<span class='ident'>supports_clear_rgba</span>() {
             <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>();
@@ -383,71 +326,64 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>AddRound</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>RoundRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>round</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>radius</span>: <span class='ident'>f64</span>) <span class='op'>-&gt;</span> <span class='ident'>RoundRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>RoundRectangleColorContext</span> {
-            <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
-            <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
-            <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
-            <span class='ident'>rect</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>()),
-            <span class='ident'>round_radius</span>: <span class='ident'>Value</span>(<span class='ident'>radius</span>),
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Fill</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>fill</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>BackEnd</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>back_end</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) {
+        <span class='kw'>if</span> <span class='ident'>back_end</span>.<span class='ident'>supports_tri_list_xy_f32_rgba_f32</span>() {
+            <span class='kw'>let</span> <span class='ident'>rect</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>();
+            <span class='kw'>let</span> <span class='ident'>bevel_radius</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>bevel_radius</span>.<span class='ident'>get</span>();
+            <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>();<span class='comment'>
+            // Complete transparency does not need to be rendered.
+            </span><span class='kw'>if</span> <span class='ident'>color</span>[<span class='number'>3</span>] <span class='op'>==</span> <span class='number'>0.0</span> { <span class='kw'>return</span>; }<span class='comment'>
+            // Turn on alpha blending if not completely opaque.
+            </span><span class='kw'>let</span> <span class='ident'>needs_alpha</span> <span class='op'>=</span> <span class='ident'>color</span>[<span class='number'>3</span>] <span class='op'>!=</span> <span class='number'>1.0</span>;
+            <span class='kw'>if</span> <span class='ident'>needs_alpha</span> { <span class='ident'>back_end</span>.<span class='ident'>enable_alpha_blend</span>(); }
+            <span class='ident'>with_round_rectangle_tri_list_xy_f32_rgba_f32</span>(
+                <span class='number'>2</span>,
+                <span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>(),
+                <span class='ident'>rect</span>,
+                <span class='ident'>bevel_radius</span>,
+                <span class='ident'>color</span>,
+                <span class='op'>|</span><span class='ident'>vertices</span>, <span class='ident'>colors</span><span class='op'>|</span> {
+                    <span class='ident'>back_end</span>.<span class='ident'>tri_list_xy_f32_rgba_f32</span>(<span class='ident'>vertices</span>, <span class='ident'>colors</span>)
+                }
+            );
+            <span class='kw'>if</span> <span class='ident'>needs_alpha</span> { <span class='ident'>back_end</span>.<span class='ident'>disable_alpha_blend</span>(); }
+        } <span class='kw'>else</span> {
+            <span class='macro'>unimplemented</span><span class='macro'>!</span>();
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>AddBevel</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>View</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>bevel</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>radius</span>: <span class='ident'>f64</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
         <span class='ident'>BevelRectangleColorContext</span> {
-            <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
-            <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
-            <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
-            <span class='ident'>rect</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>()),
-            <span class='ident'>bevel_radius</span>: <span class='ident'>Value</span>(<span class='ident'>radius</span>),
-        }
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>View</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>RectangleColorContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>rect</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>()),
+            <span class='ident'>bevel_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>bevel_radius</span>.<span class='ident'>get</span>()),
             <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
         }
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>RectangleColorContext</span> {
+    <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>BevelRectangleColorContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Value</span>(<span class='ident'>identity</span>()),
             <span class='ident'>rect</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>()),
+            <span class='ident'>bevel_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>bevel_radius</span>.<span class='ident'>get</span>()),
             <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
         }
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>store_view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>RectangleColorContext</span> {
+    <span class='kw'>fn</span> <span class='ident'>store_view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>BevelRectangleColorContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
             <span class='ident'>rect</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>()),
-            <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
-        }
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>AddImage</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>ImageRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>RectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>image</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>image</span>: <span class='ident'>Image</span>) <span class='op'>-&gt;</span> <span class='ident'>ImageRectangleColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>ImageRectangleColorContext</span> {
-            <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
-            <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
-            <span class='ident'>rect</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>()),
-            <span class='ident'>image</span>: <span class='ident'>Value</span>(<span class='ident'>image</span>),
+            <span class='ident'>bevel_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>bevel_radius</span>.<span class='ident'>get</span>()),
             <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
         }
     }
