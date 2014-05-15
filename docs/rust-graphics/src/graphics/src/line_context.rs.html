@@ -140,17 +140,50 @@
 <span id='100'>100</span>
 <span id='101'>101</span>
 <span id='102'>102</span>
+<span id='103'>103</span>
+<span id='104'>104</span>
+<span id='105'>105</span>
+<span id='106'>106</span>
+<span id='107'>107</span>
+<span id='108'>108</span>
+<span id='109'>109</span>
+<span id='110'>110</span>
+<span id='111'>111</span>
+<span id='112'>112</span>
+<span id='113'>113</span>
+<span id='114'>114</span>
+<span id='115'>115</span>
+<span id='116'>116</span>
+<span id='117'>117</span>
+<span id='118'>118</span>
+<span id='119'>119</span>
+<span id='120'>120</span>
+<span id='121'>121</span>
+<span id='122'>122</span>
+<span id='123'>123</span>
+<span id='124'>124</span>
+<span id='125'>125</span>
+<span id='126'>126</span>
+<span id='127'>127</span>
+<span id='128'>128</span>
+<span id='129'>129</span>
+<span id='130'>130</span>
+<span id='131'>131</span>
 </pre><pre class='rust '>
 
 <span class='kw'>use</span> {
+    <span class='ident'>AddBevelBorder</span>,
     <span class='ident'>AddColor</span>,
     <span class='ident'>AddRoundBorder</span>,
+    <span class='ident'>AddSquareBorder</span>,
+    <span class='ident'>BevelBorderLineContext</span>,
     <span class='ident'>Borrowed</span>,
     <span class='ident'>Field</span>,
     <span class='ident'>Line</span>,
     <span class='ident'>LineColorContext</span>,
     <span class='ident'>Matrix2d</span>,
     <span class='ident'>RoundBorderLineContext</span>,
+    <span class='ident'>SquareBorderLineContext</span>,
     <span class='ident'>Value</span>,
     <span class='ident'>View</span>,
 };
@@ -242,6 +275,31 @@
         }
     }
 }
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>AddBevelBorder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>BevelBorderLineContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>LineContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+    <span class='kw'>fn</span> <span class='ident'>bevel_border_radius</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>radius</span>: <span class='ident'>f64</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelBorderLineContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>BevelBorderLineContext</span> {
+            <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
+            <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
+            <span class='ident'>line</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
+            <span class='ident'>bevel_border_radius</span>: <span class='ident'>Value</span>(<span class='ident'>radius</span>),
+        }
+    }
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>AddSquareBorder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>SquareBorderLineContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>LineContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+    <span class='kw'>fn</span> <span class='ident'>square_border_radius</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>radius</span>: <span class='ident'>f64</span>) <span class='op'>-&gt;</span> <span class='ident'>SquareBorderLineContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>SquareBorderLineContext</span> {
+            <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
+            <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
+            <span class='ident'>line</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
+            <span class='ident'>square_border_radius</span>: <span class='ident'>Value</span>(<span class='ident'>radius</span>),
+        }
+    }
+}
+
 
 </pre>
 </section>

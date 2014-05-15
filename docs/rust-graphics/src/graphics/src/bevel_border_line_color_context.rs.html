@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The graphics library documentation.">
 
-    <title>round_border_line_color_context.rs.html -- source</title>
+    <title>bevel_border_line_color_context.rs.html -- source</title>
 
     <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
           rel='stylesheet' type='text/css'>
@@ -217,8 +217,8 @@
     <span class='ident'>HasTransform</span>,
 };
 
-<span class='doccomment'>/// A line context with round border information.
-</span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='doccomment'>/// A line context with bevel border information.
+</span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Base/original transform.
 </span>    <span class='kw'>pub</span> <span class='ident'>base</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// Current transform.
@@ -227,55 +227,55 @@
 </span>    <span class='kw'>pub</span> <span class='ident'>line</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Line</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// Current color.
 </span>    <span class='kw'>pub</span> <span class='ident'>color</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Color</span><span class='op'>&gt;</span>,
-    <span class='doccomment'>/// Current round border.
-</span>    <span class='kw'>pub</span> <span class='ident'>round_border_radius</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>f64</span><span class='op'>&gt;</span>,
+    <span class='doccomment'>/// Current bevel border.
+</span>    <span class='kw'>pub</span> <span class='ident'>bevel_border_radius</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>f64</span><span class='op'>&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>get_transform</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Matrix2d</span> {
         <span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>CanTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>CanTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>transform</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Matrix2d</span>) <span class='op'>-&gt;</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>RoundBorderLineColorContext</span> {
+    <span class='kw'>fn</span> <span class='ident'>transform</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Matrix2d</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>BevelBorderLineColorContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Value</span>(<span class='ident'>value</span>),
             <span class='ident'>line</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
             <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
-            <span class='ident'>round_border_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>round_border_radius</span>.<span class='ident'>get</span>()),
+            <span class='ident'>bevel_border_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>bevel_border_radius</span>.<span class='ident'>get</span>()),
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasColor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Color</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasColor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Color</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>get_color</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Color</span> {
         <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>CanColor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>Color</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>CanColor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>Color</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>color</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Color</span>) <span class='op'>-&gt;</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>RoundBorderLineColorContext</span> {
+    <span class='kw'>fn</span> <span class='ident'>color</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Color</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>BevelBorderLineColorContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
             <span class='ident'>line</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
             <span class='ident'>color</span>: <span class='ident'>Value</span>(<span class='ident'>value</span>),
-            <span class='ident'>round_border_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>round_border_radius</span>.<span class='ident'>get</span>()),
+            <span class='ident'>bevel_border_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>bevel_border_radius</span>.<span class='ident'>get</span>()),
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Stroke</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Stroke</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>stroke</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>BackEnd</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>back_end</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) {
         <span class='kw'>if</span> <span class='ident'>back_end</span>.<span class='ident'>supports_tri_list_xy_f32_rgba_f32</span>() {
             <span class='kw'>let</span> <span class='ident'>line</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>();
-            <span class='kw'>let</span> <span class='ident'>round_border_radius</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>round_border_radius</span>.<span class='ident'>get</span>();
+            <span class='kw'>let</span> <span class='ident'>bevel_border_radius</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>bevel_border_radius</span>.<span class='ident'>get</span>();
             <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>();<span class='comment'>
             // Complete transparency does not need to be rendered.
             </span><span class='kw'>if</span> <span class='ident'>color</span>[<span class='number'>3</span>] <span class='op'>==</span> <span class='number'>0.0</span> { <span class='kw'>return</span>; }<span class='comment'>
@@ -283,10 +283,10 @@
             </span><span class='kw'>let</span> <span class='ident'>needs_alpha</span> <span class='op'>=</span> <span class='ident'>color</span>[<span class='number'>3</span>] <span class='op'>!=</span> <span class='number'>1.0</span>;
             <span class='kw'>if</span> <span class='ident'>needs_alpha</span> { <span class='ident'>back_end</span>.<span class='ident'>enable_alpha_blend</span>(); }
             <span class='ident'>with_round_border_line_tri_list_xy_f32_rgba_f32</span>(
-                <span class='number'>64</span>,
+                <span class='number'>3</span>,
                 <span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>(),
                 <span class='ident'>line</span>,
-                <span class='ident'>round_border_radius</span>,
+                <span class='ident'>bevel_border_radius</span>,
                 <span class='ident'>color</span>,
                 <span class='op'>|</span><span class='ident'>vertices</span>, <span class='ident'>colors</span><span class='op'>|</span> {
                     <span class='ident'>back_end</span>.<span class='ident'>tri_list_xy_f32_rgba_f32</span>(<span class='ident'>vertices</span>, <span class='ident'>colors</span>)
@@ -299,42 +299,42 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>View</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>View</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>RoundBorderLineColorContext</span> {
+    <span class='kw'>fn</span> <span class='ident'>view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>BevelBorderLineColorContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>line</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
             <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
-            <span class='ident'>round_border_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>round_border_radius</span>.<span class='ident'>get</span>()),
+            <span class='ident'>bevel_border_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>bevel_border_radius</span>.<span class='ident'>get</span>()),
         }
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>RoundBorderLineColorContext</span> {
+    <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>BevelBorderLineColorContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Value</span>(<span class='ident'>identity</span>()),
             <span class='ident'>line</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
             <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
-            <span class='ident'>round_border_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>round_border_radius</span>.<span class='ident'>get</span>()),
+            <span class='ident'>bevel_border_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>bevel_border_radius</span>.<span class='ident'>get</span>()),
         }
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>store_view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>RoundBorderLineColorContext</span> {
+    <span class='kw'>fn</span> <span class='ident'>store_view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>BevelBorderLineColorContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
             <span class='ident'>line</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
             <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
-            <span class='ident'>round_border_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>round_border_radius</span>.<span class='ident'>get</span>()),
+            <span class='ident'>bevel_border_radius</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>bevel_border_radius</span>.<span class='ident'>get</span>()),
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Clear</span> <span class='kw'>for</span> <span class='ident'>RoundBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Clear</span> <span class='kw'>for</span> <span class='ident'>BevelBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>clear</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>BackEnd</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>back_end</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) {
         <span class='kw'>if</span> <span class='ident'>back_end</span>.<span class='ident'>supports_clear_rgba</span>() {
             <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>();

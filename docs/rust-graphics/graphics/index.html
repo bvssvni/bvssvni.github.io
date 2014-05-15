@@ -39,7 +39,7 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'>Crate <a class='mod' href=''>graphics</a><a class='source' href='../src/graphics/src/lib.rs.html#1-202'>[src]</a></h1>
+<h1 class='fqn'>Crate <a class='mod' href=''>graphics</a><a class='source' href='../src/graphics/src/lib.rs.html#1-214'>[src]</a></h1>
 <div class='docblock'><p>A library for 2D graphics that works with multiple back-ends.</p>
 
 <p>To implement your own back-end, use the BackEnd trait.</p>
@@ -104,6 +104,20 @@ To solve this problem, break the statement into two parts, one for each step:</p
                     </tr>
                 </table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
+                    <tr>
+                        <td><a class='struct' href='struct.BevelBorderLineColorContext.html'
+                               title='graphics::BevelBorderLineColorContext'>BevelBorderLineColorContext</a></td>
+                        <td class='docblock short'><p>A line context with bevel border information.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='struct' href='struct.BevelBorderLineContext.html'
+                               title='graphics::BevelBorderLineContext'>BevelBorderLineContext</a></td>
+                        <td class='docblock short'><p>A line context with bevel border information.</p>
+</td>
+                    </tr>
+                
                     <tr>
                         <td><a class='struct' href='struct.ColorContext.html'
                                title='graphics::ColorContext'>ColorContext</a></td>
@@ -224,6 +238,20 @@ To solve this problem, break the statement into two parts, one for each step:</p
                     </tr>
                 
                     <tr>
+                        <td><a class='struct' href='struct.SquareBorderLineColorContext.html'
+                               title='graphics::SquareBorderLineColorContext'>SquareBorderLineColorContext</a></td>
+                        <td class='docblock short'><p>A line context with square border information.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='struct' href='struct.SquareBorderLineContext.html'
+                               title='graphics::SquareBorderLineContext'>SquareBorderLineContext</a></td>
+                        <td class='docblock short'><p>A line context with square border information.</p>
+</td>
+                    </tr>
+                
+                    <tr>
                         <td><a class='struct' href='struct.TweenColorContext.html'
                                title='graphics::TweenColorContext'>TweenColorContext</a></td>
                         <td class='docblock short'><p>An animation inbetweening context with color.</p>
@@ -262,6 +290,13 @@ that is partially based on an existing structure.</p>
                     </tr>
                 </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
+                    <tr>
+                        <td><a class='trait' href='trait.AddBevelBorder.html'
+                               title='graphics::AddBevelBorder'>AddBevelBorder</a></td>
+                        <td class='docblock short'><p>Implemented by contexts that can add round border.</p>
+</td>
+                    </tr>
+                
                     <tr>
                         <td><a class='trait' href='trait.AddColor.html'
                                title='graphics::AddColor'>AddColor</a></td>
@@ -322,6 +357,13 @@ that is partially based on an existing structure.</p>
                         <td><a class='trait' href='trait.AddRoundBorder.html'
                                title='graphics::AddRoundBorder'>AddRoundBorder</a></td>
                         <td class='docblock short'><p>Implemented by contexts that can add round border.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='trait' href='trait.AddSquareBorder.html'
+                               title='graphics::AddSquareBorder'>AddSquareBorder</a></td>
+                        <td class='docblock short'><p>Implemented by contexts that can add square border.</p>
 </td>
                     </tr>
                 
