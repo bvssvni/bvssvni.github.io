@@ -194,8 +194,6 @@
 <span id='154'>154</span>
 <span id='155'>155</span>
 <span id='156'>156</span>
-<span id='157'>157</span>
-<span id='158'>158</span>
 </pre><pre class='rust '>
 
 <span class='kw'>use</span> {
@@ -213,16 +211,14 @@
     <span class='ident'>RoundBorderLineColorContext</span>,
     <span class='ident'>SquareBorderLineColorContext</span>,
     <span class='ident'>Value</span>,
-    <span class='ident'>View</span>,
-};
-<span class='kw'>use</span> <span class='ident'>vecmath</span>::{
-    <span class='ident'>identity</span>,
 };
 <span class='kw'>use</span> <span class='ident'>internal</span>::{
     <span class='ident'>CanColor</span>,
     <span class='ident'>CanTransform</span>,
+    <span class='ident'>CanViewTransform</span>,
     <span class='ident'>HasColor</span>,
     <span class='ident'>HasTransform</span>,
+    <span class='ident'>HasViewTransform</span>,
 };
 
 <span class='doccomment'>/// A line context.
@@ -235,6 +231,18 @@
 </span>    <span class='kw'>pub</span> <span class='ident'>line</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Line</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// Current color.
 </span>    <span class='kw'>pub</span> <span class='ident'>color</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Color</span><span class='op'>&gt;</span>,
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>LineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+    <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>LineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
+        <span class='ident'>LineColorContext</span> {
+            <span class='ident'>base</span>: <span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>clone</span>(),
+            <span class='ident'>transform</span>: <span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>clone</span>(),
+            <span class='ident'>line</span>: <span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>clone</span>(),
+            <span class='ident'>color</span>: <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>clone</span>(),
+        }
+    }
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>LineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
@@ -256,6 +264,26 @@
     }
 }
 
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasViewTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>LineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+    <span class='kw'>fn</span> <span class='ident'>get_view_transform</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Matrix2d</span> {
+        <span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()
+    }
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>CanViewTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>LineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> 
+<span class='kw'>for</span> <span class='ident'>LineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+    <span class='kw'>fn</span> <span class='ident'>view_transform</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Matrix2d</span>) <span class='op'>-&gt;</span> <span class='ident'>LineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+        <span class='ident'>LineColorContext</span> {
+            <span class='ident'>base</span>: <span class='ident'>Value</span>(<span class='ident'>value</span>),
+            <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
+            <span class='ident'>line</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
+            <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
+        }
+    }
+}
+
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasColor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Color</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>LineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>get_color</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Color</span> {
@@ -271,38 +299,6 @@
             <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
             <span class='ident'>line</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
             <span class='ident'>color</span>: <span class='ident'>Value</span>(<span class='ident'>value</span>),
-        }
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>View</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>LineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>LineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>LineColorContext</span> {
-            <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
-            <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
-            <span class='ident'>line</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
-            <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
-        }
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>LineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>LineColorContext</span> {
-            <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
-            <span class='ident'>transform</span>: <span class='ident'>Value</span>(<span class='ident'>identity</span>()),
-            <span class='ident'>line</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
-            <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
-        }
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>store_view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>LineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>LineColorContext</span> {
-            <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
-            <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
-            <span class='ident'>line</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
-            <span class='ident'>color</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
         }
     }
 }
@@ -349,7 +345,7 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Clear</span> <span class='kw'>for</span> <span class='ident'>LineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>clear</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>BackEnd</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>back_end</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) {
         <span class='kw'>if</span> <span class='ident'>back_end</span>.<span class='ident'>supports_clear_rgba</span>() {
-            <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>();
+            <span class='kw'>let</span> <span class='kw-2'>&amp;</span><span class='ident'>Color</span>(<span class='ident'>color</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>();
             <span class='ident'>back_end</span>.<span class='ident'>clear_rgba</span>(<span class='ident'>color</span>[<span class='number'>0</span>], <span class='ident'>color</span>[<span class='number'>1</span>], <span class='ident'>color</span>[<span class='number'>2</span>], <span class='ident'>color</span>[<span class='number'>3</span>]);
         }
     }

@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The piston library documentation.">
 
-    <title>game_settings.rs.html -- source</title>
+    <title>event.rs.html -- source</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600'
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
           rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="../../../main.css">
 
@@ -66,31 +66,31 @@
 <span id='26'>26</span>
 </pre><pre class='rust '>
 
-<span class='doccomment'>/// Basic settings for window behavior.
-</span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>GameSettings</span> {
-    <span class='doccomment'>/// If true, exit when pressing Esc.
-</span>    <span class='kw'>pub</span> <span class='ident'>exit_on_esc</span>: <span class='ident'>bool</span>,
-    <span class='doccomment'>/// The background color.
-</span>    <span class='kw'>pub</span> <span class='ident'>background_color</span>: [<span class='ident'>f32</span>, ..<span class='number'>4</span>],
+<span class='doccomment'>//! Event data.
+</span>
+<span class='kw'>use</span> <span class='ident'>keyboard</span>;
+<span class='kw'>use</span> <span class='ident'>mouse</span>;
+
+<span class='doccomment'>/// Contains the information associated with an event.
+</span><span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Event</span> {
+    <span class='doccomment'>/// No event occured.
+</span>    <span class='ident'>NoEvent</span>,
+    <span class='doccomment'>/// A key was released.
+</span>    <span class='ident'>KeyReleased</span>(<span class='ident'>keyboard</span>::<span class='ident'>Key</span>),
+    <span class='doccomment'>/// A key was pressed.
+</span>    <span class='ident'>KeyPressed</span>(<span class='ident'>keyboard</span>::<span class='ident'>Key</span>),
+    <span class='doccomment'>/// A mouse button was pressed.
+</span>    <span class='ident'>MouseButtonPressed</span>(<span class='ident'>mouse</span>::<span class='ident'>Button</span>),
+    <span class='doccomment'>/// A mouse button was released.
+</span>    <span class='ident'>MouseButtonReleased</span>(<span class='ident'>mouse</span>::<span class='ident'>Button</span>),
+    <span class='doccomment'>/// The mouse moved.
+</span>    <span class='doccomment'>///
+</span>    <span class='doccomment'>/// (x, y, Some((dx, dy)))
+</span>    <span class='doccomment'>/// The second part is relative motion which is not bounded.
+</span>    <span class='doccomment'>/// Relative motion might not be supported by all window back-ends.
+</span>    <span class='ident'>MouseMoved</span>(<span class='ident'>f64</span>, <span class='ident'>f64</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>f64</span>, <span class='ident'>f64</span>)<span class='op'>&gt;</span>),
 }
 
-<span class='kw'>impl</span> <span class='ident'>GameSettings</span> {
-    <span class='doccomment'>/// Gets default settings.
-</span>    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>GameSettings</span> {
-        <span class='ident'>GameSettings</span> {
-            <span class='ident'>exit_on_esc</span>: <span class='boolval'>true</span>,
-            <span class='ident'>background_color</span>: [<span class='number'>0.0</span>, <span class='number'>0.0</span>, <span class='number'>0.0</span>, <span class='number'>1.0</span>],
-        }
-    }
-
-    <span class='doccomment'>/// Creates a new Settings.
-</span>    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>exit_on_esc</span>: <span class='ident'>bool</span>, <span class='ident'>background_color</span>: [<span class='ident'>f32</span>, ..<span class='number'>4</span>]) <span class='op'>-&gt;</span> <span class='ident'>GameSettings</span> {
-        <span class='ident'>GameSettings</span> {
-            <span class='ident'>exit_on_esc</span>: <span class='ident'>exit_on_esc</span>,
-            <span class='ident'>background_color</span>: <span class='ident'>background_color</span>,
-        }
-    }
-}
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

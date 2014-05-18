@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The graphics library documentation.">
+    <meta name="description" content="The piston library documentation.">
 
-    <title>graphics::vecmath::relative_round_rectangle - Rust</title>
+    <title>piston::keyboard - Rust</title>
 
     <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
           rel='stylesheet' type='text/css'>
@@ -24,7 +24,7 @@
     <section class="sidebar">
         
 
-        <p class='location'><a href='../index.html'>graphics</a>&#8203;::<a href='index.html'>vecmath</a></p><div class='block fn'><h2>Functions</h2><a class='fn ' href='fn.area.html'>area</a><br/><a class='fn ' href='fn.area_centroid.html'>area_centroid</a><br/><a class='fn ' href='fn.centroid.html'>centroid</a><br/><a class='fn ' href='fn.identity.html'>identity</a><br/><a class='fn ' href='fn.inside_triangle.html'>inside_triangle</a><br/><a class='fn ' href='fn.least_separation_4.html'>least_separation_4</a><br/><a class='fn ' href='fn.line_side.html'>line_side</a><br/><a class='fn ' href='fn.margin_rectangle.html'>margin_rectangle</a><br/><a class='fn ' href='fn.margin_round_rectangle.html'>margin_round_rectangle</a><br/><a class='fn ' href='fn.modular_offset.html'>modular_offset</a><br/><a class='fn ' href='fn.multiply.html'>multiply</a><br/><a class='fn ' href='fn.relative_rectangle.html'>relative_rectangle</a><br/><a class='fn current' href='fn.relative_round_rectangle.html'>relative_round_rectangle</a><br/><a class='fn ' href='fn.rotate_radians.html'>rotate_radians</a><br/><a class='fn ' href='fn.scale.html'>scale</a><br/><a class='fn ' href='fn.separation.html'>separation</a><br/><a class='fn ' href='fn.shear.html'>shear</a><br/><a class='fn ' href='fn.translate.html'>translate</a><br/></div>
+        <p class='location'><a href='../index.html'>piston</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../event/index.html'>event</a><br/><a class='mod ' href='../game_window/index.html'>game_window</a><br/><a class='mod current' href='../keyboard/index.html'>keyboard</a><br/><a class='mod ' href='../mouse/index.html'>mouse</a><br/><a class='mod ' href='../shader_utils/index.html'>shader_utils</a><br/></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='../struct.AssetStore.html'>AssetStore</a><br/><a class='struct ' href='../struct.GameWindowGLFW.html'>GameWindowGLFW</a><br/><a class='struct ' href='../struct.GameWindowSDL2.html'>GameWindowSDL2</a><br/><a class='struct ' href='../struct.GameWindowSettings.html'>GameWindowSettings</a><br/><a class='struct ' href='../struct.Gl.html'>Gl</a><br/><a class='struct ' href='../struct.GlData.html'>GlData</a><br/></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='../trait.Game.html'>Game</a><br/></div>
     </section>
 
     <nav class="sub">
@@ -38,10 +38,18 @@
         </form>
     </nav>
 
-    <section id='main' class="content fn">
-<h1 class='fqn'>Function <a href='../index.html'>graphics</a>::<a href='index.html'>vecmath</a>::<a class='fn' href=''>relative_round_rectangle</a><a class='source' href='../../src/graphics/src/vecmath.rs.html#128-130'>[src]</a></h1>
-<pre class='rust fn'>pub fn relative_round_rectangle(rect: &amp;<a class='typedef' href='../../graphics/typedef.RoundRectangle.html' title='graphics::RoundRectangle'>RoundRectangle</a>, x: f64, y: f64) -&gt; <a class='typedef' href='../../graphics/typedef.RoundRectangle.html' title='graphics::RoundRectangle'>RoundRectangle</a></pre><div class='docblock'><p>Computes a relative round rectangle using the round rectangle as a tile.</p>
-</div></section>
+    <section id='main' class="content mod">
+<h1 class='fqn'>Module <a href='../index.html'>piston</a>::<a class='mod' href=''>keyboard</a><a class='source' href='../../src/piston/src/keyboard.rs.html#2-21'>[src]</a></h1>
+<div class='docblock'><p>Back-end agnostic keyboard keys.</p>
+</div><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                    <tr>
+                        <td><a class='type' href='type.Key.html'
+                               title='piston::keyboard::Key'>Key</a></td>
+                        <td class='docblock short'><p>Represent a keyboard key.</p>
+</td>
+                    </tr>
+                </table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -79,7 +87,7 @@
 
     <script>
         var rootPath = "../../";
-        var currentCrate = "graphics";
+        var currentCrate = "piston";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>

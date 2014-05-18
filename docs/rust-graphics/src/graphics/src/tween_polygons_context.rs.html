@@ -131,28 +131,26 @@
 <span id='91'>91</span>
 <span id='92'>92</span>
 <span id='93'>93</span>
-<span id='94'>94</span>
 </pre><pre class='rust '>
 
 <span class='kw'>use</span> {
     <span class='ident'>AddColor</span>,
     <span class='ident'>Borrowed</span>,
+    <span class='ident'>Color</span>,
     <span class='ident'>Field</span>,
     <span class='ident'>Matrix2d</span>,
     <span class='ident'>TweenPolygonsColorContext</span>,
     <span class='ident'>Value</span>,
-    <span class='ident'>View</span>,
-};
-<span class='kw'>use</span> <span class='ident'>vecmath</span>::{
-    <span class='ident'>identity</span>,
 };
 <span class='kw'>use</span> <span class='ident'>internal</span>::{
     <span class='ident'>CanTransform</span>,
+    <span class='ident'>CanViewTransform</span>,
     <span class='ident'>HasTransform</span>,
+    <span class='ident'>HasViewTransform</span>,
 };
 
 <span class='doccomment'>/// An animation inbetweening context with color.
-</span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+</span><span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Base/origin transform.
 </span>    <span class='kw'>pub</span> <span class='ident'>base</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// Current transform.
@@ -160,33 +158,45 @@
     <span class='doccomment'>/// Animation inbetweening factor.
 </span>    <span class='kw'>pub</span> <span class='ident'>tween_factor</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>f64</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// The animated polygons.
-</span>    <span class='kw'>pub</span> <span class='ident'>polygons</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>f64</span>]]<span class='op'>&gt;</span>,
+</span>    <span class='kw'>pub</span> <span class='ident'>polygons</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> [<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> [<span class='ident'>f64</span>]]<span class='op'>&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>AddColor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TweenPolygonsColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
+    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+    <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
+        <span class='ident'>TweenPolygonsContext</span> {
+            <span class='ident'>base</span>: <span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>clone</span>(),
+            <span class='ident'>transform</span>: <span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>clone</span>(),
+            <span class='ident'>tween_factor</span>: <span class='self'>self</span>.<span class='ident'>tween_factor</span>.<span class='ident'>clone</span>(),
+            <span class='ident'>polygons</span>: <span class='self'>self</span>.<span class='ident'>polygons</span>.<span class='ident'>clone</span>(),
+        }
+    }
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>AddColor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TweenPolygonsColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Creates a RectangleColorContext.
 </span>    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>rgba</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>r</span>: <span class='ident'>f32</span>, <span class='ident'>g</span>: <span class='ident'>f32</span>, <span class='ident'>b</span>: <span class='ident'>f32</span>, <span class='ident'>a</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>TweenPolygonsColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>rgba</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>r</span>: <span class='ident'>f32</span>, <span class='ident'>g</span>: <span class='ident'>f32</span>, <span class='ident'>b</span>: <span class='ident'>f32</span>, <span class='ident'>a</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>TweenPolygonsColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
         <span class='ident'>TweenPolygonsColorContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
-            <span class='ident'>color</span>: <span class='ident'>Value</span>([<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>]),
+            <span class='ident'>color</span>: <span class='ident'>Value</span>(<span class='ident'>Color</span>([<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>])),
             <span class='ident'>tween_factor</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>tween_factor</span>.<span class='ident'>get</span>()),
             <span class='ident'>polygons</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>polygons</span>.<span class='ident'>get</span>()),
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>HasTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>HasTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>alwyas</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>get_transform</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Matrix2d</span> {
         <span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>CanTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>CanTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>transform</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Matrix2d</span>) <span class='op'>-&gt;</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>transform</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Matrix2d</span>) <span class='op'>-&gt;</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
         <span class='ident'>TweenPolygonsContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Value</span>(<span class='ident'>value</span>),
@@ -196,37 +206,25 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>View</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>HasViewTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>TweenPolygonsContext</span> {
-            <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
-            <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
-            <span class='ident'>polygons</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>polygons</span>.<span class='ident'>get</span>()),
-            <span class='ident'>tween_factor</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>tween_factor</span>.<span class='ident'>get</span>()),
-        }
+    <span class='kw'>fn</span> <span class='ident'>get_view_transform</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Matrix2d</span> {
+        <span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()
     }
+}
 
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>CanViewTransform</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>, <span class='ident'>Matrix2d</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>view_transform</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Matrix2d</span>) <span class='op'>-&gt;</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
         <span class='ident'>TweenPolygonsContext</span> {
-            <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
-            <span class='ident'>transform</span>: <span class='ident'>Value</span>(<span class='ident'>identity</span>()),
-            <span class='ident'>polygons</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>polygons</span>.<span class='ident'>get</span>()),
-            <span class='ident'>tween_factor</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>tween_factor</span>.<span class='ident'>get</span>()),
-        }
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>store_view</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>TweenPolygonsContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>TweenPolygonsContext</span> {
-            <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
+            <span class='ident'>base</span>: <span class='ident'>Value</span>(<span class='ident'>value</span>),
             <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
-            <span class='ident'>polygons</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>polygons</span>.<span class='ident'>get</span>()),
             <span class='ident'>tween_factor</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>tween_factor</span>.<span class='ident'>get</span>()),
+            <span class='ident'>polygons</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>polygons</span>.<span class='ident'>get</span>()),
         }
     }
 }
+
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

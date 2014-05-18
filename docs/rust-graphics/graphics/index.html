@@ -39,7 +39,7 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'>Crate <a class='mod' href=''>graphics</a><a class='source' href='../src/graphics/src/lib.rs.html#1-230'>[src]</a></h1>
+<h1 class='fqn'>Crate <a class='mod' href=''>graphics</a><a class='source' href='../src/graphics/src/lib.rs.html#1-292'>[src]</a></h1>
 <div class='docblock'><p>A library for 2D graphics that works with multiple back-ends.</p>
 
 <p>To implement your own back-end, use the BackEnd trait.</p>
@@ -142,6 +142,13 @@ To solve this problem, break the statement into two parts, one for each step:</p
                     </tr>
                 
                     <tr>
+                        <td><a class='struct' href='struct.Color.html'
+                               title='graphics::Color'>Color</a></td>
+                        <td class='docblock short'><p>[red, green, blue, alpha]</p>
+</td>
+                    </tr>
+                
+                    <tr>
                         <td><a class='struct' href='struct.ColorContext.html'
                                title='graphics::ColorContext'>ColorContext</a></td>
                         <td class='docblock short'><p>A context with color information.</p>
@@ -191,6 +198,13 @@ To solve this problem, break the statement into two parts, one for each step:</p
                     </tr>
                 
                     <tr>
+                        <td><a class='struct' href='struct.Line.html'
+                               title='graphics::Line'>Line</a></td>
+                        <td class='docblock short'><p>[x1, y1, x2, y2]</p>
+</td>
+                    </tr>
+                
+                    <tr>
                         <td><a class='struct' href='struct.LineColorContext.html'
                                title='graphics::LineColorContext'>LineColorContext</a></td>
                         <td class='docblock short'><p>A line context.</p>
@@ -205,6 +219,20 @@ To solve this problem, break the statement into two parts, one for each step:</p
                     </tr>
                 
                     <tr>
+                        <td><a class='struct' href='struct.Matrix2d.html'
+                               title='graphics::Matrix2d'>Matrix2d</a></td>
+                        <td class='docblock short'><p>[m00, m01, m02, m10, m11, m12]</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='struct' href='struct.PixelRectangle.html'
+                               title='graphics::PixelRectangle'>PixelRectangle</a></td>
+                        <td class='docblock short'><p>[x, y, w, h]</p>
+</td>
+                    </tr>
+                
+                    <tr>
                         <td><a class='struct' href='struct.PolygonColorContext.html'
                                title='graphics::PolygonColorContext'>PolygonColorContext</a></td>
                         <td class='docblock short'><p>A polygon color context.</p>
@@ -215,6 +243,13 @@ To solve this problem, break the statement into two parts, one for each step:</p
                         <td><a class='struct' href='struct.PolygonContext.html'
                                title='graphics::PolygonContext'>PolygonContext</a></td>
                         <td class='docblock short'><p>A polygon context.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='struct' href='struct.Rectangle.html'
+                               title='graphics::Rectangle'>Rectangle</a></td>
+                        <td class='docblock short'><p>[x, y, w, h]</p>
 </td>
                     </tr>
                 
@@ -275,6 +310,13 @@ To solve this problem, break the statement into two parts, one for each step:</p
                     </tr>
                 
                     <tr>
+                        <td><a class='struct' href='struct.Triangle.html'
+                               title='graphics::Triangle'>Triangle</a></td>
+                        <td class='docblock short'><p>[x1, y1, x2, y2, x3, y3]</p>
+</td>
+                    </tr>
+                
+                    <tr>
                         <td><a class='struct' href='struct.TweenColorContext.html'
                                title='graphics::TweenColorContext'>TweenColorContext</a></td>
                         <td class='docblock short'><p>An animation inbetweening context with color.</p>
@@ -304,7 +346,7 @@ To solve this problem, break the statement into two parts, one for each step:</p
                 </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                     <tr>
-                        <td><a class='enum' href='enum.Field.html'
+                        <td><a class='type' href='type.Field.html'
                                title='graphics::Field'>Field</a></td>
                         <td class='docblock short'><p>A structure that might contain a value or a borrowed value.
 This is to used as building block to create data structure
@@ -465,63 +507,6 @@ This trait uses default methods to simplify implementation.</p>
                         <td><a class='trait' href='trait.View.html'
                                title='graphics::View'>View</a></td>
                         <td class='docblock short'><p>Should be implemented by contexts that draws something relative to view.</p>
-</td>
-                    </tr>
-                </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
-<table>
-                    <tr>
-                        <td><a class='typedef' href='typedef.Color.html'
-                               title='graphics::Color'>Color</a></td>
-                        <td class='docblock short'><p>[red, green, blue, alpha]</p>
-</td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='typedef' href='typedef.Line.html'
-                               title='graphics::Line'>Line</a></td>
-                        <td class='docblock short'><p>[x1, y1, x2, y2]</p>
-</td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='typedef' href='typedef.Matrix2d.html'
-                               title='graphics::Matrix2d'>Matrix2d</a></td>
-                        <td class='docblock short'><p>[m00, m01, m02, m10, m11, m12]</p>
-</td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='typedef' href='typedef.PixelRectangle.html'
-                               title='graphics::PixelRectangle'>PixelRectangle</a></td>
-                        <td class='docblock short'><p>[x, y, w, h]</p>
-</td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='typedef' href='typedef.Ray.html'
-                               title='graphics::Ray'>Ray</a></td>
-                        <td class='docblock short'><p>[x, y, dir_x, dir_y]</p>
-</td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='typedef' href='typedef.Rectangle.html'
-                               title='graphics::Rectangle'>Rectangle</a></td>
-                        <td class='docblock short'><p>[x, y, w, h]</p>
-</td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='typedef' href='typedef.Triangle.html'
-                               title='graphics::Triangle'>Triangle</a></td>
-                        <td class='docblock short'><p>[x1, y1, x2, y2, x3, y3]</p>
-</td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='typedef' href='typedef.Vec2d.html'
-                               title='graphics::Vec2d'>Vec2d</a></td>
-                        <td class='docblock short'><p>[x, y]</p>
 </td>
                     </tr>
                 </table></section>

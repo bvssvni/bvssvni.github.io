@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The piston library documentation.">
 
-    <title>piston::shader_utils::compile_shader_file - Rust</title>
+    <title>piston::game_window - Rust</title>
 
     <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
           rel='stylesheet' type='text/css'>
@@ -24,7 +24,7 @@
     <section class="sidebar">
         
 
-        <p class='location'><a href='../index.html'>piston</a>&#8203;::<a href='index.html'>shader_utils</a></p><div class='block fn'><h2>Functions</h2><a class='fn ' href='fn.compile_shader.html'>compile_shader</a><br/><a class='fn current' href='fn.compile_shader_file.html'>compile_shader_file</a><br/><a class='fn ' href='fn.with_shader_file.html'>with_shader_file</a><br/><a class='fn ' href='fn.with_shader_source.html'>with_shader_source</a><br/></div>
+        <p class='location'><a href='../index.html'>piston</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../event/index.html'>event</a><br/><a class='mod current' href='../game_window/index.html'>game_window</a><br/><a class='mod ' href='../keyboard/index.html'>keyboard</a><br/><a class='mod ' href='../mouse/index.html'>mouse</a><br/><a class='mod ' href='../shader_utils/index.html'>shader_utils</a><br/></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='../struct.AssetStore.html'>AssetStore</a><br/><a class='struct ' href='../struct.GameWindowGLFW.html'>GameWindowGLFW</a><br/><a class='struct ' href='../struct.GameWindowSDL2.html'>GameWindowSDL2</a><br/><a class='struct ' href='../struct.GameWindowSettings.html'>GameWindowSettings</a><br/><a class='struct ' href='../struct.Gl.html'>Gl</a><br/><a class='struct ' href='../struct.GlData.html'>GlData</a><br/></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='../trait.Game.html'>Game</a><br/></div>
     </section>
 
     <nav class="sub">
@@ -38,10 +38,18 @@
         </form>
     </nav>
 
-    <section id='main' class="content fn">
-<h1 class='fqn'>Function <a href='../index.html'>piston</a>::<a href='index.html'>shader_utils</a>::<a class='fn' href=''>compile_shader_file</a><a class='source' href='../../src/piston/src/shader_utils.rs.html#9-23'>[src]</a></h1>
-<pre class='rust fn'>pub fn compile_shader_file(shader_type: GLenum, file: &amp;str) -&gt; GLuint</pre><div class='docblock'><p>Compiles a vertex shader from file and fails if not succeeding.</p>
-</div></section>
+    <section id='main' class="content mod">
+<h1 class='fqn'>Module <a href='../index.html'>piston</a>::<a class='mod' href=''>game_window</a><a class='source' href='../../src/piston/src/game_window.rs.html#1-26'>[src]</a></h1>
+<div class='docblock'><p>A trait for window operations.</p>
+</div><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                    <tr>
+                        <td><a class='trait' href='trait.GameWindow.html'
+                               title='piston::game_window::GameWindow'>GameWindow</a></td>
+                        <td class='docblock short'><p>Implemented by window back-end.</p>
+</td>
+                    </tr>
+                </table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

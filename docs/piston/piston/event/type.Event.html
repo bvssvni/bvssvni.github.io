@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The piston library documentation.">
 
-    <title>piston::shader_utils::with_shader_file - Rust</title>
+    <title>piston::event::Event - Rust</title>
 
     <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600'
           rel='stylesheet' type='text/css'>
@@ -24,7 +24,7 @@
     <section class="sidebar">
         
 
-        <p class='location'><a href='../index.html'>piston</a>&#8203;::<a href='index.html'>shader_utils</a></p><div class='block fn'><h2>Functions</h2><a class='fn ' href='fn.compile_shader.html'>compile_shader</a><br/><a class='fn ' href='fn.compile_shader_file.html'>compile_shader_file</a><br/><a class='fn current' href='fn.with_shader_file.html'>with_shader_file</a><br/><a class='fn ' href='fn.with_shader_source.html'>with_shader_source</a><br/></div>
+        <p class='location'><a href='../index.html'>piston</a>&#8203;::<a href='index.html'>event</a></p>
     </section>
 
     <nav class="sub">
@@ -38,10 +38,28 @@
         </form>
     </nav>
 
-    <section id='main' class="content fn">
-<h1 class='fqn'>Function <a href='../index.html'>piston</a>::<a href='index.html'>shader_utils</a>::<a class='fn' href=''>with_shader_file</a><a class='source' href='../../src/piston/src/shader_utils.rs.html#33-55'>[src]</a></h1>
-<pre class='rust fn'>pub fn with_shader_file&lt;T&gt;(file: &amp;str, f: |<a class='enum' href='http://static.rust-lang.org/doc/master/std/io/enum.IoResult.html' title='std::io::IoResult'>IoResult</a>&lt;&amp;[&amp;[u8]]&gt;| -&gt; T) -&gt; T</pre><div class='docblock'><p>Reads a shader file and creates data required to compile.</p>
-</div></section>
+    <section id='main' class="content type">
+<h1 class='fqn'>Enum <a href='../index.html'>piston</a>::<a href='index.html'>event</a>::<a class='type' href=''>Event</a><a class='source' href='../../src/piston/src/event.rs.html#8-25'>[src]</a></h1>
+<pre class='rust enum'>pub enum Event {
+    NoEvent,
+    KeyReleased(<a class='type' href='../../piston/keyboard/type.Key.html' title='piston::keyboard::Key'>Key</a>),
+    KeyPressed(<a class='type' href='../../piston/keyboard/type.Key.html' title='piston::keyboard::Key'>Key</a>),
+    MouseButtonPressed(<a class='type' href='../../piston/mouse/type.Button.html' title='piston::mouse::Button'>Button</a>),
+    MouseButtonReleased(<a class='type' href='../../piston/mouse/type.Button.html' title='piston::mouse::Button'>Button</a>),
+    MouseMoved(f64, f64, <a class='type' href='http://static.rust-lang.org/doc/master/core/option/type.Option.html' title='core::option::Option'>Option</a>&lt;(f64, f64)&gt;),
+}</pre><div class='docblock'><p>Contains the information associated with an event.</p>
+</div><h2 class='variants'>Variants</h2>
+<table><tr><td id='variant.NoEvent'><code>NoEvent</code></td><td><div class='docblock'><p>No event occured.</p>
+</div></td></tr><tr><td id='variant.KeyReleased'><code>KeyReleased</code></td><td><div class='docblock'><p>A key was released.</p>
+</div></td></tr><tr><td id='variant.KeyPressed'><code>KeyPressed</code></td><td><div class='docblock'><p>A key was pressed.</p>
+</div></td></tr><tr><td id='variant.MouseButtonPressed'><code>MouseButtonPressed</code></td><td><div class='docblock'><p>A mouse button was pressed.</p>
+</div></td></tr><tr><td id='variant.MouseButtonReleased'><code>MouseButtonReleased</code></td><td><div class='docblock'><p>A mouse button was released.</p>
+</div></td></tr><tr><td id='variant.MouseMoved'><code>MouseMoved</code></td><td><div class='docblock'><p>The mouse moved.</p>
+
+<p>(x, y, Some((dx, dy)))
+The second part is relative motion which is not bounded.
+Relative motion might not be supported by all window back-ends.</p>
+</div></td></tr></table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

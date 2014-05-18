@@ -73,6 +73,12 @@
 <span id='33'>33</span>
 <span id='34'>34</span>
 <span id='35'>35</span>
+<span id='36'>36</span>
+<span id='37'>37</span>
+<span id='38'>38</span>
+<span id='39'>39</span>
+<span id='40'>40</span>
+<span id='41'>41</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_id</span> <span class='op'>=</span> <span class='string'>&quot;piston&quot;</span>]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>missing_doc</span>)]</span>
@@ -85,29 +91,35 @@
 </span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>time</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>graphics</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>opengles</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>glfw</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>collections</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>gl</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>glfw</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>sdl2</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>png</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>libc</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>Game</span> <span class='op'>=</span> <span class='ident'>game</span>::<span class='ident'>Game</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>GameWindow</span> <span class='op'>=</span> <span class='ident'>game_window</span>::<span class='ident'>GameWindow</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>GameWindowSDL2</span> <span class='op'>=</span> <span class='ident'>game_window_sdl2</span>::<span class='ident'>GameWindowSDL2</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>GameWindowGLFW</span> <span class='op'>=</span> <span class='ident'>game_window_glfw</span>::<span class='ident'>GameWindowGLFW</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>GameWindowSettings</span> <span class='op'>=</span> <span class='ident'>game_window_settings</span>::<span class='ident'>GameWindowSettings</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>Gl</span> <span class='op'>=</span> <span class='ident'>gl</span>::<span class='ident'>Gl</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>GlData</span> <span class='op'>=</span> <span class='ident'>gl</span>::<span class='ident'>GlData</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>Gl</span> <span class='op'>=</span> <span class='ident'>gl_back_end</span>::<span class='ident'>Gl</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>GlData</span> <span class='op'>=</span> <span class='ident'>gl_back_end</span>::<span class='ident'>GlData</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>AssetStore</span> <span class='op'>=</span> <span class='ident'>asset_store</span>::<span class='ident'>AssetStore</span>;
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>shader_utils</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>game_window</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>keyboard</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>event</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>mouse</span>;
 
 <span class='kw'>mod</span> <span class='ident'>game</span>;
-<span class='kw'>mod</span> <span class='ident'>game_window</span>;
+<span class='kw'>mod</span> <span class='ident'>game_window_sdl2</span>;
+<span class='kw'>mod</span> <span class='ident'>game_window_glfw</span>;
 <span class='kw'>mod</span> <span class='ident'>game_window_settings</span>;
-<span class='kw'>mod</span> <span class='ident'>gl</span>;
-<span class='kw'>mod</span> <span class='ident'>asset_store</span>;<span class='comment'>
-
-// Temporary copied code from other projects.
-</span><span class='kw'>mod</span> <span class='ident'>png</span>;
-<span class='attribute'>#[<span class='ident'>path</span> <span class='op'>=</span> <span class='string'>&quot;png/inflate.rs&quot;</span>]</span> <span class='kw'>mod</span> <span class='ident'>inflate</span>;
+<span class='kw'>mod</span> <span class='ident'>gl_back_end</span>;
+<span class='kw'>mod</span> <span class='ident'>asset_store</span>;
 
 </pre>
 </section>

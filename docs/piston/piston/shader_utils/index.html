@@ -24,7 +24,7 @@
     <section class="sidebar">
         
 
-        <p class='location'><a href='../index.html'>piston</a></p><div class='block mod'><h2>Modules</h2><a class='mod current' href='../shader_utils/index.html'>shader_utils</a><br/></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='../struct.AssetStore.html'>AssetStore</a><br/><a class='struct ' href='../struct.GameWindow.html'>GameWindow</a><br/><a class='struct ' href='../struct.GameWindowSettings.html'>GameWindowSettings</a><br/><a class='struct ' href='../struct.Gl.html'>Gl</a><br/><a class='struct ' href='../struct.GlData.html'>GlData</a><br/></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='../trait.Game.html'>Game</a><br/></div>
+        <p class='location'><a href='../index.html'>piston</a></p><div class='block mod'><h2>Modules</h2><a class='mod ' href='../event/index.html'>event</a><br/><a class='mod ' href='../game_window/index.html'>game_window</a><br/><a class='mod ' href='../keyboard/index.html'>keyboard</a><br/><a class='mod ' href='../mouse/index.html'>mouse</a><br/><a class='mod current' href='../shader_utils/index.html'>shader_utils</a><br/></div><div class='block struct'><h2>Structs</h2><a class='struct ' href='../struct.AssetStore.html'>AssetStore</a><br/><a class='struct ' href='../struct.GameWindowGLFW.html'>GameWindowGLFW</a><br/><a class='struct ' href='../struct.GameWindowSDL2.html'>GameWindowSDL2</a><br/><a class='struct ' href='../struct.GameWindowSettings.html'>GameWindowSettings</a><br/><a class='struct ' href='../struct.Gl.html'>Gl</a><br/><a class='struct ' href='../struct.GlData.html'>GlData</a><br/></div><div class='block trait'><h2>Traits</h2><a class='trait ' href='../trait.Game.html'>Game</a><br/></div>
     </section>
 
     <nav class="sub">
@@ -39,36 +39,17 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'>Module <a href='../index.html'>piston</a>::<a class='mod' href=''>shader_utils</a><a class='source' href='../../src/piston/src/shader_utils.rs.html#1-74'>[src]</a></h1>
+<h1 class='fqn'>Module <a href='../index.html'>piston</a>::<a class='mod' href=''>shader_utils</a><a class='source' href='../../src/piston/src/shader_utils.rs.html#1-78'>[src]</a></h1>
 <div class='docblock'><p>Helper functions for dealing with shaders.</p>
 </div><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                     <tr>
                         <td><a class='fn' href='fn.compile_shader.html'
                                title='piston::shader_utils::compile_shader'>compile_shader</a></td>
-                        <td class='docblock short'><p>Compiles a shader.
+                        <td class='docblock short'><p>Compiles a vertex shader from file and fails if not succeeding.
+Reads a shader file and creates data required to compile.
+Compiles a shader.
 Returns a shader or a message with the error.</p>
-</td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='fn' href='fn.compile_shader_file.html'
-                               title='piston::shader_utils::compile_shader_file'>compile_shader_file</a></td>
-                        <td class='docblock short'><p>Compiles a vertex shader from file and fails if not succeeding.</p>
-</td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='fn' href='fn.with_shader_file.html'
-                               title='piston::shader_utils::with_shader_file'>with_shader_file</a></td>
-                        <td class='docblock short'><p>Reads a shader file and creates data required to compile.</p>
-</td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='fn' href='fn.with_shader_source.html'
-                               title='piston::shader_utils::with_shader_source'>with_shader_source</a></td>
-                        <td class='docblock short'><p>Splits lines into byte slices.</p>
 </td>
                     </tr>
                 </table></section>
