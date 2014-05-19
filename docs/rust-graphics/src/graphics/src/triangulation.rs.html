@@ -369,6 +369,15 @@
 <span id='329'>329</span>
 <span id='330'>330</span>
 <span id='331'>331</span>
+<span id='332'>332</span>
+<span id='333'>333</span>
+<span id='334'>334</span>
+<span id='335'>335</span>
+<span id='336'>336</span>
+<span id='337'>337</span>
+<span id='338'>338</span>
+<span id='339'>339</span>
+<span id='340'>340</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Methods for converting shapes into triangles.
 </span>
@@ -378,36 +387,45 @@
     <span class='ident'>FRAC_PI_2</span>,
 };
 <span class='kw'>use</span> {
-    <span class='ident'>Color</span>,
     <span class='ident'>Image</span>,
-    <span class='ident'>Line</span>,
-    <span class='ident'>Matrix2d</span>,
-    <span class='ident'>Rectangle</span>,
 };
 <span class='kw'>use</span> <span class='ident'>interpolation</span>::{<span class='ident'>lerp</span>};
+<span class='kw'>use</span> <span class='ident'>internal</span>::{
+    <span class='ident'>Color</span>,
+    <span class='ident'>Line</span>,
+    <span class='ident'>Matrix2d</span>,
+    <span class='ident'>Polygon</span>,
+    <span class='ident'>Polygons</span>,
+    <span class='ident'>Radius</span>,
+    <span class='ident'>Rectangle</span>,
+    <span class='ident'>Scalar</span>,
+    <span class='ident'>Vec2d</span>,
+};
 <span class='kw'>use</span> <span class='ident'>vecmath</span>::{
     <span class='ident'>multiply</span>,
     <span class='ident'>orient</span>,
     <span class='ident'>translate</span>,
 };
 
-<span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-<span class='kw'>fn</span> <span class='ident'>tx</span>(<span class='kw-2'>&amp;</span><span class='ident'>Matrix2d</span>(<span class='ident'>m</span>): <span class='kw-2'>&amp;</span><span class='ident'>Matrix2d</span>, <span class='ident'>x</span>: <span class='ident'>f64</span>, <span class='ident'>y</span>: <span class='ident'>f64</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+<span class='doccomment'>/// Transformed x coordinate as f32.
+</span><span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+<span class='kw'>fn</span> <span class='ident'>tx</span>(<span class='ident'>m</span>: <span class='ident'>Matrix2d</span>, <span class='ident'>x</span>: <span class='ident'>Scalar</span>, <span class='ident'>y</span>: <span class='ident'>Scalar</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
     (<span class='ident'>m</span>[<span class='number'>0</span>] <span class='op'>*</span> <span class='ident'>x</span> <span class='op'>+</span> <span class='ident'>m</span>[<span class='number'>1</span>] <span class='op'>*</span> <span class='ident'>y</span> <span class='op'>+</span> <span class='ident'>m</span>[<span class='number'>2</span>]) <span class='kw'>as</span> <span class='ident'>f32</span>
 }
 
-<span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-<span class='kw'>fn</span> <span class='ident'>ty</span>(<span class='kw-2'>&amp;</span><span class='ident'>Matrix2d</span>(<span class='ident'>m</span>): <span class='kw-2'>&amp;</span><span class='ident'>Matrix2d</span>, <span class='ident'>x</span>: <span class='ident'>f64</span>, <span class='ident'>y</span>: <span class='ident'>f64</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
+<span class='doccomment'>/// Transformed y coordinate as f32.
+</span><span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
+<span class='kw'>fn</span> <span class='ident'>ty</span>(<span class='ident'>m</span>: <span class='ident'>Matrix2d</span>, <span class='ident'>x</span>: <span class='ident'>Scalar</span>, <span class='ident'>y</span>: <span class='ident'>Scalar</span>) <span class='op'>-&gt;</span> <span class='ident'>f32</span> {
     (<span class='ident'>m</span>[<span class='number'>3</span>] <span class='op'>*</span> <span class='ident'>x</span> <span class='op'>+</span> <span class='ident'>m</span>[<span class='number'>4</span>] <span class='op'>*</span> <span class='ident'>y</span> <span class='op'>+</span> <span class='ident'>m</span>[<span class='number'>5</span>]) <span class='kw'>as</span> <span class='ident'>f32</span>
 }
 
 <span class='doccomment'>/// Streams tweened polygons using linear interpolation.
 </span><span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_lerp_polygons_tri_list_xy_f32_rgba_f32</span>(
-    <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>Matrix2d</span>,
-    <span class='ident'>polygons</span>: <span class='kw-2'>&amp;</span>[<span class='kw-2'>&amp;</span>[<span class='ident'>f64</span>]],
-    <span class='ident'>tween_factor</span>: <span class='ident'>f64</span>,
-    <span class='ident'>color</span>: <span class='kw-2'>&amp;</span><span class='ident'>Color</span>,
+    <span class='ident'>m</span>: <span class='ident'>Matrix2d</span>,
+    <span class='ident'>polygons</span>: <span class='ident'>Polygons</span>,
+    <span class='ident'>tween_factor</span>: <span class='ident'>Scalar</span>,
+    <span class='ident'>color</span>: <span class='ident'>Color</span>,
     <span class='ident'>f</span>: <span class='op'>|</span><span class='ident'>vertices</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>], <span class='ident'>colors</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>]<span class='op'>|</span>) {
 
     <span class='kw'>let</span> <span class='ident'>poly_len</span> <span class='op'>=</span> <span class='ident'>polygons</span>.<span class='ident'>len</span>() <span class='kw'>as</span> <span class='ident'>f64</span>;<span class='comment'>
@@ -442,9 +460,9 @@
 </span><span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_ellipse_tri_list_xy_f32_rgba_f32</span>(
     <span class='ident'>resolution</span>: <span class='ident'>uint</span>,
-    <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>Matrix2d</span>,
-    <span class='kw-2'>&amp;</span><span class='ident'>Rectangle</span>(<span class='ident'>rect</span>): <span class='kw-2'>&amp;</span><span class='ident'>Rectangle</span>,
-    <span class='ident'>color</span>: <span class='kw-2'>&amp;</span><span class='ident'>Color</span>,
+    <span class='ident'>m</span>: <span class='ident'>Matrix2d</span>,
+    <span class='ident'>rect</span>: <span class='ident'>Rectangle</span>,
+    <span class='ident'>color</span>: <span class='ident'>Color</span>,
     <span class='ident'>f</span>: <span class='op'>|</span><span class='ident'>vertices</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>], <span class='ident'>colors</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>]<span class='op'>|</span>) {
 
     <span class='kw'>let</span> (<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>w</span>, <span class='ident'>h</span>) <span class='op'>=</span> (<span class='ident'>rect</span>[<span class='number'>0</span>], <span class='ident'>rect</span>[<span class='number'>1</span>], <span class='ident'>rect</span>[<span class='number'>2</span>], <span class='ident'>rect</span>[<span class='number'>3</span>]);
@@ -465,21 +483,21 @@
 </span><span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_round_border_line_tri_list_xy_f32_rgba_f32</span>(
     <span class='ident'>resolution_cap</span>: <span class='ident'>uint</span>,
-    <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>Matrix2d</span>,
-    <span class='kw-2'>&amp;</span><span class='ident'>Line</span>(<span class='ident'>line</span>): <span class='kw-2'>&amp;</span><span class='ident'>Line</span>,
-    <span class='ident'>round_border_radius</span>: <span class='kw-2'>&amp;</span><span class='ident'>f64</span>,
-    <span class='ident'>color</span>: <span class='kw-2'>&amp;</span><span class='ident'>Color</span>,
+    <span class='ident'>m</span>: <span class='ident'>Matrix2d</span>,
+    <span class='ident'>line</span>: <span class='ident'>Line</span>,
+    <span class='ident'>round_border_radius</span>: <span class='ident'>Radius</span>,
+    <span class='ident'>color</span>: <span class='ident'>Color</span>,
     <span class='ident'>f</span>: <span class='op'>|</span><span class='ident'>vertices</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>], <span class='ident'>colors</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>]<span class='op'>|</span>) {
 
-    <span class='kw'>let</span> <span class='ident'>radius</span> <span class='op'>=</span> <span class='op'>*</span><span class='ident'>round_border_radius</span>;
+    <span class='kw'>let</span> <span class='ident'>radius</span> <span class='op'>=</span> <span class='ident'>round_border_radius</span>;
     <span class='kw'>let</span> (<span class='ident'>x1</span>, <span class='ident'>y1</span>, <span class='ident'>x2</span>, <span class='ident'>y2</span>) <span class='op'>=</span> (<span class='ident'>line</span>[<span class='number'>0</span>], <span class='ident'>line</span>[<span class='number'>1</span>], <span class='ident'>line</span>[<span class='number'>2</span>], <span class='ident'>line</span>[<span class='number'>3</span>]);
     <span class='kw'>let</span> (<span class='ident'>dx</span>, <span class='ident'>dy</span>) <span class='op'>=</span> (<span class='ident'>x2</span> <span class='op'>-</span> <span class='ident'>x1</span>, <span class='ident'>y2</span> <span class='op'>-</span> <span class='ident'>y1</span>);
     <span class='kw'>let</span> <span class='ident'>w</span> <span class='op'>=</span> (<span class='ident'>dx</span> <span class='op'>*</span> <span class='ident'>dx</span> <span class='op'>+</span> <span class='ident'>dy</span> <span class='op'>*</span> <span class='ident'>dy</span>).<span class='ident'>sqrt</span>();
-    <span class='kw'>let</span> <span class='ident'>m</span> <span class='op'>=</span> <span class='ident'>multiply</span>(<span class='ident'>m</span>, <span class='kw-2'>&amp;</span><span class='ident'>translate</span>(<span class='ident'>x1</span>, <span class='ident'>y1</span>));
-    <span class='kw'>let</span> <span class='ident'>m</span> <span class='op'>=</span> <span class='ident'>multiply</span>(<span class='kw-2'>&amp;</span><span class='ident'>m</span>, <span class='kw-2'>&amp;</span><span class='ident'>orient</span>(<span class='ident'>dx</span>, <span class='ident'>dy</span>));
+    <span class='kw'>let</span> <span class='ident'>m</span> <span class='op'>=</span> <span class='ident'>multiply</span>(<span class='ident'>m</span>, <span class='ident'>translate</span>(<span class='ident'>x1</span>, <span class='ident'>y1</span>));
+    <span class='kw'>let</span> <span class='ident'>m</span> <span class='op'>=</span> <span class='ident'>multiply</span>(<span class='ident'>m</span>, <span class='ident'>orient</span>(<span class='ident'>dx</span>, <span class='ident'>dy</span>));
     <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>resolution_cap</span> <span class='op'>*</span> <span class='number'>2</span>;
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>i</span> <span class='op'>=</span> <span class='number'>0u</span>;
-    <span class='ident'>stream_polygon_tri_list_xy_f32_rgba_f32</span>(<span class='kw-2'>&amp;</span><span class='ident'>m</span>, <span class='op'>||</span> {
+    <span class='ident'>stream_polygon_tri_list_xy_f32_rgba_f32</span>(<span class='ident'>m</span>, <span class='op'>||</span> {
         <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>&gt;=</span> <span class='ident'>n</span> { <span class='kw'>return</span> <span class='prelude-val'>None</span>; }
 
         <span class='kw'>let</span> <span class='ident'>j</span> <span class='op'>=</span> <span class='ident'>i</span>;
@@ -511,14 +529,14 @@
 </span><span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_round_rectangle_tri_list_xy_f32_rgba_f32</span>(
     <span class='ident'>resolution_corner</span>: <span class='ident'>uint</span>,
-    <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>Matrix2d</span>,
-    <span class='kw-2'>&amp;</span><span class='ident'>Rectangle</span>(<span class='ident'>rect</span>): <span class='kw-2'>&amp;</span><span class='ident'>Rectangle</span>,
-    <span class='ident'>round_radius</span>: <span class='kw-2'>&amp;</span><span class='ident'>f64</span>,
-    <span class='ident'>color</span>: <span class='kw-2'>&amp;</span><span class='ident'>Color</span>,
+    <span class='ident'>m</span>: <span class='ident'>Matrix2d</span>,
+    <span class='ident'>rect</span>: <span class='ident'>Rectangle</span>,
+    <span class='ident'>round_radius</span>: <span class='ident'>Radius</span>,
+    <span class='ident'>color</span>: <span class='ident'>Color</span>,
     <span class='ident'>f</span>: <span class='op'>|</span><span class='ident'>vertices</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>], <span class='ident'>colors</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>]<span class='op'>|</span>) {
 
     <span class='kw'>let</span> (<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>w</span>, <span class='ident'>h</span>) <span class='op'>=</span> (<span class='ident'>rect</span>[<span class='number'>0</span>], <span class='ident'>rect</span>[<span class='number'>1</span>], <span class='ident'>rect</span>[<span class='number'>2</span>], <span class='ident'>rect</span>[<span class='number'>3</span>]);
-    <span class='kw'>let</span> <span class='ident'>radius</span> <span class='op'>=</span> <span class='op'>*</span><span class='ident'>round_radius</span>;
+    <span class='kw'>let</span> <span class='ident'>radius</span> <span class='op'>=</span> <span class='ident'>round_radius</span>;
     <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>resolution_corner</span> <span class='op'>*</span> <span class='number'>4</span>;
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>i</span> <span class='op'>=</span> <span class='number'>0u</span>;
     <span class='ident'>stream_polygon_tri_list_xy_f32_rgba_f32</span>(<span class='ident'>m</span>, <span class='op'>||</span> {
@@ -571,9 +589,9 @@
 <span class='doccomment'>/// Streams a polygon into tri list with color per vertex.
 </span><span class='doccomment'>/// Uses buffers that fit inside L1 cache.
 </span><span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>stream_polygon_tri_list_xy_f32_rgba_f32</span>(
-    <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>Matrix2d</span>,
-    <span class='ident'>polygon</span>: <span class='op'>||</span> <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>[<span class='ident'>f64</span>, ..<span class='number'>2</span>]<span class='op'>&gt;</span>,
-    <span class='kw-2'>&amp;</span><span class='ident'>Color</span>(<span class='ident'>color</span>): <span class='kw-2'>&amp;</span><span class='ident'>Color</span>,
+    <span class='ident'>m</span>: <span class='ident'>Matrix2d</span>,
+    <span class='ident'>polygon</span>: <span class='op'>||</span> <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Vec2d</span><span class='op'>&gt;</span>,
+    <span class='ident'>color</span>: <span class='ident'>Color</span>,
     <span class='ident'>f</span>: <span class='op'>|</span><span class='ident'>vertices</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>], <span class='ident'>colors</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>]<span class='op'>|</span>) {
 
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>vertices</span>: [<span class='ident'>f32</span>, ..<span class='number'>740</span>] <span class='op'>=</span> [<span class='number'>0.0</span>, ..<span class='number'>740</span>];
@@ -641,9 +659,9 @@
 <span class='doccomment'>/// Splits polygon into convex segments with one color per vertex.
 </span><span class='doccomment'>/// Create a buffer that fits into L1 cache with 1KB overhead.
 </span><span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_polygon_tri_list_xy_f32_rgba_f32</span>(
-    <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>Matrix2d</span>,
-    <span class='ident'>polygon</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f64</span>],
-    <span class='ident'>color</span>: <span class='kw-2'>&amp;</span><span class='ident'>Color</span>,
+    <span class='ident'>m</span>: <span class='ident'>Matrix2d</span>,
+    <span class='ident'>polygon</span>: <span class='ident'>Polygon</span>,
+    <span class='ident'>color</span>: <span class='ident'>Color</span>,
     <span class='ident'>f</span>: <span class='op'>|</span><span class='ident'>vertices</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>], <span class='ident'>colors</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>f32</span>]<span class='op'>|</span>) {
 
     <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>polygon</span>.<span class='ident'>len</span>();
@@ -661,8 +679,8 @@
 <span class='doccomment'>/// Creates triangle list vertices from rectangle.
 </span><span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rect_tri_list_xy_f32</span>(
-    <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>Matrix2d</span>,
-    <span class='kw-2'>&amp;</span><span class='ident'>Rectangle</span>(<span class='ident'>rect</span>): <span class='kw-2'>&amp;</span><span class='ident'>Rectangle</span>
+    <span class='ident'>m</span>: <span class='ident'>Matrix2d</span>,
+    <span class='ident'>rect</span>: <span class='ident'>Rectangle</span>
 ) <span class='op'>-&gt;</span> [<span class='ident'>f32</span>, ..<span class='number'>12</span>] {
     <span class='kw'>let</span> (<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>w</span>, <span class='ident'>h</span>) <span class='op'>=</span> (<span class='ident'>rect</span>[<span class='number'>0</span>], <span class='ident'>rect</span>[<span class='number'>1</span>], <span class='ident'>rect</span>[<span class='number'>2</span>], <span class='ident'>rect</span>[<span class='number'>3</span>]);
     <span class='kw'>let</span> (<span class='ident'>x2</span>, <span class='ident'>y2</span>) <span class='op'>=</span> (<span class='ident'>x</span> <span class='op'>+</span> <span class='ident'>w</span>, <span class='ident'>y</span> <span class='op'>+</span> <span class='ident'>h</span>);
@@ -673,7 +691,7 @@
 <span class='doccomment'>/// Creates triangle list colors from rectangle.
 </span><span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rect_tri_list_rgba_f32</span>(
-    <span class='kw-2'>&amp;</span><span class='ident'>Color</span>(<span class='ident'>color</span>): <span class='kw-2'>&amp;</span><span class='ident'>Color</span>
+    <span class='ident'>color</span>: <span class='ident'>Color</span>
 ) <span class='op'>-&gt;</span> [<span class='ident'>f32</span>, ..<span class='number'>48</span>] {
     <span class='kw'>let</span> (<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>) <span class='op'>=</span> (<span class='ident'>color</span>[<span class='number'>0</span>], <span class='ident'>color</span>[<span class='number'>1</span>], <span class='ident'>color</span>[<span class='number'>2</span>], <span class='ident'>color</span>[<span class='number'>3</span>]);
     [<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>,<span class='comment'> // 0

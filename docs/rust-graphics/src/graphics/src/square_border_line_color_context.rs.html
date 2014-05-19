@@ -189,16 +189,14 @@
 <span id='149'>149</span>
 <span id='150'>150</span>
 <span id='151'>151</span>
+<span id='152'>152</span>
 </pre><pre class='rust '>
 
 <span class='kw'>use</span> {
     <span class='ident'>BackEnd</span>,
     <span class='ident'>Borrowed</span>,
-    <span class='ident'>Color</span>,
     <span class='ident'>Clear</span>,
     <span class='ident'>Field</span>,
-    <span class='ident'>Line</span>,
-    <span class='ident'>Matrix2d</span>,
     <span class='ident'>Stroke</span>,
     <span class='ident'>Value</span>,
 };
@@ -209,9 +207,13 @@
     <span class='ident'>CanColor</span>,
     <span class='ident'>CanTransform</span>,
     <span class='ident'>CanViewTransform</span>,
+    <span class='ident'>Color</span>,
     <span class='ident'>HasColor</span>,
     <span class='ident'>HasTransform</span>,
     <span class='ident'>HasViewTransform</span>,
+    <span class='ident'>Line</span>,
+    <span class='ident'>Matrix2d</span>,
+    <span class='ident'>Radius</span>,
 };
 
 <span class='doccomment'>/// A line context with square border information.
@@ -225,18 +227,18 @@
     <span class='doccomment'>/// Current color.
 </span>    <span class='kw'>pub</span> <span class='ident'>color</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Color</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// Current square border.
-</span>    <span class='kw'>pub</span> <span class='ident'>square_border_radius</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>f64</span><span class='op'>&gt;</span>,
+</span>    <span class='kw'>pub</span> <span class='ident'>square_border_radius</span>: <span class='ident'>Field</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Radius</span><span class='op'>&gt;</span>,
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>SquareBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>SquareBorderLineColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
         <span class='ident'>SquareBorderLineColorContext</span> {
-            <span class='ident'>base</span>: <span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>transform</span>: <span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>line</span>: <span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>color</span>: <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>square_border_radius</span>: <span class='self'>self</span>.<span class='ident'>square_border_radius</span>.<span class='ident'>clone</span>(),
+            <span class='ident'>base</span>: <span class='ident'>Value</span>(<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
+            <span class='ident'>transform</span>: <span class='ident'>Value</span>(<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
+            <span class='ident'>line</span>: <span class='ident'>Value</span>(<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>()),
+            <span class='ident'>color</span>: <span class='ident'>Value</span>(<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>()),
+            <span class='ident'>square_border_radius</span>: <span class='ident'>Value</span>(<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>square_border_radius</span>.<span class='ident'>get</span>()),
         }
     }
 }
@@ -308,7 +310,7 @@
         <span class='kw'>if</span> <span class='ident'>back_end</span>.<span class='ident'>supports_tri_list_xy_f32_rgba_f32</span>() {
             <span class='kw'>let</span> <span class='ident'>line</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>line</span>.<span class='ident'>get</span>();
             <span class='kw'>let</span> <span class='ident'>square_border_radius</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>square_border_radius</span>.<span class='ident'>get</span>();
-            <span class='kw'>let</span> <span class='kw-2'>&amp;</span><span class='ident'>Color</span>(<span class='ident'>color</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>();<span class='comment'>
+            <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>();<span class='comment'>
             // Complete transparency does not need to be rendered.
             </span><span class='kw'>if</span> <span class='ident'>color</span>[<span class='number'>3</span>] <span class='op'>==</span> <span class='number'>0.0</span> { <span class='kw'>return</span>; }<span class='comment'>
             // Turn on alpha blending if not completely opaque.
@@ -316,10 +318,10 @@
             <span class='kw'>if</span> <span class='ident'>needs_alpha</span> { <span class='ident'>back_end</span>.<span class='ident'>enable_alpha_blend</span>(); }
             <span class='ident'>with_round_border_line_tri_list_xy_f32_rgba_f32</span>(
                 <span class='number'>2</span>,
-                <span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>(),
-                <span class='ident'>line</span>,
-                <span class='ident'>square_border_radius</span>,
-                <span class='kw-2'>&amp;</span><span class='ident'>Color</span>(<span class='ident'>color</span>),
+                <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>(),
+                <span class='op'>*</span><span class='ident'>line</span>,
+                <span class='op'>*</span><span class='ident'>square_border_radius</span>,
+                <span class='op'>*</span><span class='ident'>color</span>,
                 <span class='op'>|</span><span class='ident'>vertices</span>, <span class='ident'>colors</span><span class='op'>|</span> {
                     <span class='ident'>back_end</span>.<span class='ident'>tri_list_xy_f32_rgba_f32</span>(<span class='ident'>vertices</span>, <span class='ident'>colors</span>)
                 }
@@ -335,7 +337,7 @@
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>clear</span><span class='op'>&lt;</span><span class='ident'>B</span>: <span class='ident'>BackEnd</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>back_end</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>B</span>) {
         <span class='kw'>if</span> <span class='ident'>back_end</span>.<span class='ident'>supports_clear_rgba</span>() {
-            <span class='kw'>let</span> <span class='kw-2'>&amp;</span><span class='ident'>Color</span>(<span class='ident'>color</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>();
+            <span class='kw'>let</span> <span class='ident'>color</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>color</span>.<span class='ident'>get</span>();
             <span class='ident'>back_end</span>.<span class='ident'>clear_rgba</span>(<span class='ident'>color</span>[<span class='number'>0</span>], <span class='ident'>color</span>[<span class='number'>1</span>], <span class='ident'>color</span>[<span class='number'>2</span>], <span class='ident'>color</span>[<span class='number'>3</span>]);
         }
     }

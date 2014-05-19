@@ -145,24 +145,30 @@
 <span id='105'>105</span>
 <span id='106'>106</span>
 <span id='107'>107</span>
+<span id='108'>108</span>
+<span id='109'>109</span>
+<span id='110'>110</span>
+<span id='111'>111</span>
+<span id='112'>112</span>
+<span id='113'>113</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> {
     <span class='ident'>AddColor</span>,
     <span class='ident'>Borrowed</span>,
-    <span class='ident'>Color</span>,
     <span class='ident'>EllipseColorContext</span>,
     <span class='ident'>Field</span>,
-    <span class='ident'>Matrix2d</span>,
-    <span class='ident'>Rectangle</span>,
     <span class='ident'>Value</span>,
 };
 <span class='kw'>use</span> <span class='ident'>internal</span>::{
     <span class='ident'>CanRectangle</span>,
     <span class='ident'>CanTransform</span>,
     <span class='ident'>CanViewTransform</span>,
+    <span class='ident'>ColorComponent</span>,
     <span class='ident'>HasRectangle</span>,
     <span class='ident'>HasTransform</span>,
     <span class='ident'>HasViewTransform</span>,
+    <span class='ident'>Matrix2d</span>,
+    <span class='ident'>Rectangle</span>,
 };
 
 <span class='doccomment'>/// An ellipse context.
@@ -179,9 +185,9 @@
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>EllipseContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
         <span class='ident'>EllipseContext</span> {
-            <span class='ident'>base</span>: <span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>transform</span>: <span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>rect</span>: <span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>clone</span>(),
+            <span class='ident'>base</span>: <span class='ident'>Value</span>(<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
+            <span class='ident'>transform</span>: <span class='ident'>Value</span>(<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
+            <span class='ident'>rect</span>: <span class='ident'>Value</span>(<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>()),
         }
     }
 }
@@ -225,12 +231,18 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>AddColor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>EllipseColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>EllipseContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>rgba</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>r</span>: <span class='ident'>f32</span>, <span class='ident'>g</span>: <span class='ident'>f32</span>, <span class='ident'>b</span>: <span class='ident'>f32</span>, <span class='ident'>a</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>EllipseColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>rgba</span>(
+        <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, 
+        <span class='ident'>r</span>: <span class='ident'>ColorComponent</span>, 
+        <span class='ident'>g</span>: <span class='ident'>ColorComponent</span>, 
+        <span class='ident'>b</span>: <span class='ident'>ColorComponent</span>, 
+        <span class='ident'>a</span>: <span class='ident'>ColorComponent</span>
+    ) <span class='op'>-&gt;</span> <span class='ident'>EllipseColorContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
         <span class='ident'>EllipseColorContext</span> {
             <span class='ident'>base</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>base</span>.<span class='ident'>get</span>()),
             <span class='ident'>transform</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>transform</span>.<span class='ident'>get</span>()),
             <span class='ident'>rect</span>: <span class='ident'>Borrowed</span>(<span class='self'>self</span>.<span class='ident'>rect</span>.<span class='ident'>get</span>()),
-            <span class='ident'>color</span>: <span class='ident'>Value</span>(<span class='ident'>Color</span>([<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>])),
+            <span class='ident'>color</span>: <span class='ident'>Value</span>([<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>]),
         }
     }
 }

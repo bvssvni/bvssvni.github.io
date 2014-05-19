@@ -104,11 +104,8 @@
 <span id='64'>64</span>
 <span id='65'>65</span>
 <span id='66'>66</span>
-<span id='67'>67</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> {
-    <span class='ident'>Rectangle</span>,
-};
+
 <span class='kw'>use</span> <span class='ident'>vecmath</span>::{
     <span class='ident'>margin_rectangle</span>,
     <span class='ident'>relative_rectangle</span>,
@@ -116,6 +113,7 @@
 <span class='kw'>use</span> <span class='ident'>internal</span>::{
     <span class='ident'>CanRectangle</span>,
     <span class='ident'>HasRectangle</span>,
+    <span class='ident'>Rectangle</span>,
 };
 
 <span class='doccomment'>/// Should be implemented by contexts that have rectangle information.
@@ -164,12 +162,12 @@
 <span class='op'>&gt;</span> <span class='ident'>RelativeRectangle</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>U</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>T</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>margin</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>m</span>: <span class='ident'>f64</span>) <span class='op'>-&gt;</span> <span class='ident'>U</span> {
-        <span class='self'>self</span>.<span class='ident'>rectangle</span>(<span class='ident'>margin_rectangle</span>(<span class='self'>self</span>.<span class='ident'>get_rectangle</span>(), <span class='ident'>m</span>))
+        <span class='self'>self</span>.<span class='ident'>rectangle</span>(<span class='ident'>margin_rectangle</span>(<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>get_rectangle</span>(), <span class='ident'>m</span>))
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>rel</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>x</span>: <span class='ident'>f64</span>, <span class='ident'>y</span>: <span class='ident'>f64</span>) <span class='op'>-&gt;</span> <span class='ident'>U</span> {
-        <span class='self'>self</span>.<span class='ident'>rectangle</span>(<span class='ident'>relative_rectangle</span>(<span class='self'>self</span>.<span class='ident'>get_rectangle</span>(), <span class='ident'>x</span>, <span class='ident'>y</span>))
+        <span class='self'>self</span>.<span class='ident'>rectangle</span>(<span class='ident'>relative_rectangle</span>(<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>get_rectangle</span>(), <span class='ident'>x</span>, <span class='ident'>y</span>))
     }
 }
 
